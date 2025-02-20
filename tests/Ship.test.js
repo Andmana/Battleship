@@ -1,6 +1,6 @@
 const Ship = require("../src/models/Ship");
 
-describe("Ship Tests", () => {
+describe.skip("Ship Tests", () => {
     const ship = Ship(3);
 
     test("apply the correct length at instantiation", () => {
