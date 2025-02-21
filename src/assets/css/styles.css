@@ -6,7 +6,7 @@
     --background-main: #131618;
     --background-secondary: #0642739b;
     --background-input: rgba(255, 255, 255, 0.53);
-    --hero-radar: #0da2ff;
+    --hero-radar: #00c8ff;
     --villain-radar: #592986;
 }
 
@@ -19,6 +19,7 @@ body {
 
 .app {
     min-height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-items: center;
@@ -47,14 +48,19 @@ body {
 
 .message {
     width: 100%;
+
+    position: relative;
 }
 
 .message > div {
     margin-top: 10px;
     height: 70px;
+
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 40px;
+
     padding: 0 clamp(10px, 15vw, 300px);
 }
 
@@ -62,6 +68,31 @@ body {
     flex: 1;
     width: 100%;
     justify-self: unset;
+
+    display: flex;
+    justify-content: start;
+}
+
+.message-box h1 {
+    width: fit-content;
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    white-space: nowrap; /* Keeps the content on a single line */
+    letter-spacing: 0.15em; /* Adjust as needed */
+    animation: typing 4s steps(60, end);
+}
+
+#bot-msg .message-box {
+    justify-content: end;
+}
+
+/* The typing effect */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 }
 
 #player-msg {
@@ -81,49 +112,65 @@ body {
 }
 
 .message img {
-    width: 40px;
-    height: 40px;
+    width: 90px;
+    height: 90px;
 }
 
 .boards {
-    margin: 20px 5px;
+    flex: 1;
+
+    margin: 20px 20px;
+    padding: 20px;
+    height: 100%;
+    border-radius: 20px;
+
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 5vw;
-    background-color: var(--background-input);
-    padding: 10px;
-    width: auto;
+
+    background-color: rgba(255, 255, 255, 0.188);
 }
 
+/* Player */
 .boards > div {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    gap: 10px;
 }
 
 .ships {
-    height: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#bot-board .ships {
+    align-items: end;
 }
 
 .area {
-    width: 400px;
-    height: 400px;
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 35px);
+    grid-template-rows: repeat(10, 35px);
     gap: 2px;
     padding: 2px;
+    margin: auto;
+
+    background-color: rgba(255, 255, 255, 0.578);
 }
 
 #player-board .area {
-    -webkit-box-shadow: inset 0px 0px 300px 49px var(--hero-radar);
-    -moz-box-shadow: inset 0px 0px 300px 49px var(--hero-radar);
-    box-shadow: inset 0px 0px 300px 49px var(--hero-radar);
+    -webkit-box-shadow: inset 10px 0px 146px 30px var(--hero-radar);
+    -moz-box-shadow: inset 10px 0px 146px 30px var(--hero-radar);
+    box-shadow: inset 10px 0px 146px 30px var(--hero-radar);
 }
 
 #bot-board .area {
-    -webkit-box-shadow: inset 0px 0px 300px 49px var(--villain-radar);
-    -moz-box-shadow: inset 0px 0px 300px 49px var(--villain-radar);
-    box-shadow: inset 0px 0px 300px 49px var(--villain-radar);
+    -webkit-box-shadow: inset 10px 0px 146px 30px var(--villain-radar);
+    -moz-box-shadow: inset 10px 0px 146px 30px var(--villain-radar);
+    box-shadow: inset 10px 0px 146px 40px var(--villain-radar);
 }
 
 .area div {
@@ -156,4 +203,87 @@ body {
 
 .footer a img {
     width: 25px;
+}
+
+.ship-icon {
+    height: 30px;
+    filter: invert(1) sepia(1) saturate(0) brightness(0);
+}
+
+.ship-2 {
+    width: 70px;
+}
+
+.ship-3 {
+    width: 105px;
+}
+
+.ship-4 {
+    width: 140px;
+}
+
+.ship-5 {
+    width: 175px;
+}
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+
+@media (min-width: 481px) and (max-width: 767px) {
+    /* CSS */
+}
+
+@media (max-width: 767px) {
+    /* CSS */
+    .ships {
+        display: grid;
+        grid-template-columns: 2fr 2fr 3fr 4fr 5fr;
+    }
+}
+
+/* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+
+@media (min-width: 320px) and (max-width: 480px) {
+    /* CSS */
 }
