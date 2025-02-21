@@ -1,3 +1,159 @@
+:root {
+    --text-main: black;
+    --text-secondary: rgb(255, 255, 255);
+    --color-hero: #37aff7;
+    --color-villain: #592986;
+    --background-main: #131618;
+    --background-secondary: #0642739b;
+    --background-input: rgba(255, 255, 255, 0.53);
+    --hero-radar: #0da2ff;
+    --villain-radar: #592986;
+}
+
 body {
-    background-color: black;
+    background-image: url("../images/main-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    position: relative;
+}
+
+.header,
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    height: 50px;
+    background-color: var(--background-secondary);
+    color: var(--text-secondary);
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message {
+    width: 100%;
+}
+
+.message > div {
+    margin-top: 10px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 clamp(10px, 15vw, 300px);
+}
+
+.message-box {
+    flex: 1;
+    width: 100%;
+    justify-self: unset;
+}
+
+#player-msg {
+    background-color: var(--color-hero);
+}
+
+#player-msg div {
+    text-align: start;
+}
+
+#bot-msg {
+    background-color: var(--color-villain);
+}
+
+#bot-msg div {
+    text-align: end;
+}
+
+.message img {
+    width: 40px;
+    height: 40px;
+}
+
+.boards {
+    margin: 20px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5vw;
+    background-color: var(--background-input);
+    padding: 10px;
+    width: auto;
+}
+
+.boards > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.ships {
+    height: 50px;
+}
+
+.area {
+    width: 400px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 2px;
+    padding: 2px;
+}
+
+#player-board .area {
+    -webkit-box-shadow: inset 0px 0px 300px 49px var(--hero-radar);
+    -moz-box-shadow: inset 0px 0px 300px 49px var(--hero-radar);
+    box-shadow: inset 0px 0px 300px 49px var(--hero-radar);
+}
+
+#bot-board .area {
+    -webkit-box-shadow: inset 0px 0px 300px 49px var(--villain-radar);
+    -moz-box-shadow: inset 0px 0px 300px 49px var(--villain-radar);
+    box-shadow: inset 0px 0px 300px 49px var(--villain-radar);
+}
+
+.area div {
+    background-color: rgba(255, 255, 255, 0.601);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.area div:hover {
+    content: "X";
+    color: black;
+    background-color: rgba(0, 0, 0, 0.151);
+}
+
+.footer {
+    height: 40px;
+    padding: 10px 0px;
+    background-color: var(--background-secondary);
+    color: var(--text-secondary);
+}
+
+.footer a {
+    all: unset;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.footer a img {
+    width: 25px;
 }
