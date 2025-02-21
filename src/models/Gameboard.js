@@ -1,6 +1,6 @@
 const Ship = require("./Ship");
 
-const Gameboard = (_dimension = 8) => {
+const Gameboard = (_dimension = 10) => {
     const dimension = _dimension;
     let placedShips = new Array(dimension)
         .fill(null)
@@ -40,7 +40,7 @@ const Gameboard = (_dimension = 8) => {
         const newShip = Ship(shipLen);
         let countShips = ships.push(newShip);
         newShipCoords.forEach(([row, col]) => {
-            placedShips[row][col] = countShips - 1;
+            placedShips[row][col] = ships[countShips - 1];
         });
     };
 
@@ -55,13 +55,13 @@ const Gameboard = (_dimension = 8) => {
             throw new Error("Coordinates out of bonds");
         const newShipCoords = [];
         if (dir === "h") {
-            if (originCol + shipLen >= dimension)
+            if (originCol + shipLen - 1 >= dimension)
                 throw new Error("Ship coordinates out of bonds");
 
             for (let i = 0; i < shipLen; i++)
                 newShipCoords.push([originRow, originCol + i]);
         } else {
-            if (originRow + shipLen >= dimension)
+            if (originRow + shipLen - 1 >= dimension)
                 throw new Error("Ship coordinates out of bonds");
 
             for (let i = 0; i < shipLen; i++)
@@ -76,10 +76,12 @@ const Gameboard = (_dimension = 8) => {
         attackedAreas[row][col] = true;
 
         const attackedShip = placedShips[row][col];
+        console.log(attackedShip);
         // Miss
         if (attackedShip === null) return false;
         // Attack hit an ship.
-        ships[attackedShip].hit();
+        // ships[attackedShip].hit();
+        attackedShip.hit();
         return true;
     };
 

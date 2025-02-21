@@ -9,13 +9,13 @@
     --hero-radar: #00c8ff;
     --villain-radar: #592986;
 }
-
+/* 
 body {
     background-image: url("../images/main-bg.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-}
+} */
 
 .app {
     min-height: 100vh;
@@ -161,6 +161,10 @@ body {
     background-color: rgba(255, 255, 255, 0.578);
 }
 
+.red {
+    background-color: red !important;
+}
+
 #player-board .area {
     -webkit-box-shadow: inset 10px 0px 146px 30px var(--hero-radar);
     -moz-box-shadow: inset 10px 0px 146px 30px var(--hero-radar);
@@ -184,6 +188,16 @@ body {
     content: "X";
     color: black;
     background-color: rgba(0, 0, 0, 0.151);
+}
+
+.attack-hit {
+    pointer-events: none;
+    background-color: rgb(0, 255, 51) !important;
+}
+
+.attack-miss {
+    pointer-events: none;
+    background-color: red !important;
 }
 
 .footer {
