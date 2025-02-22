@@ -1,10 +1,10 @@
 const Ship = require("../src/models/Ship");
 
-describe.skip("Ship Tests", () => {
+describe("Ship Tests", () => {
     const ship = Ship(3);
 
     test("apply the correct length at instantiation", () => {
-        expect(ship.getLength()).toBe(3);
+        expect(ship.length).toBe(3);
     });
 
     it("should be sunk when hitted with the same amount of length", () => {

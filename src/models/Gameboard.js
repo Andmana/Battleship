@@ -1,29 +1,24 @@
 const Ship = require("./Ship");
 
 const Gameboard = (_dimension = 10) => {
+    //
     const dimension = _dimension;
-    let placedShips = new Array(dimension)
+    const ships = [];
+    const placedShips = new Array(dimension)
         .fill(null)
         .map(() => new Array(dimension).fill(null));
-
-    let attackedAreas = new Array(dimension)
+    const attackedCoords = new Array(dimension)
         .fill(null)
         .map(() => new Array(dimension).fill(false));
 
-    let ships = [];
-
     const allSunken = () => {
         const countSunken = ships.reduce(
-            (count, ship) => (ship.isSunk() ? count + 1 : count + 0),
+            (count, ship) => (ship.isSunk() ? count + 1 : count),
             0
         );
 
         return countSunken === ships.length;
     };
-
-    const getPlacedShips = () => placedShips;
-    const getAttackedAreas = () => attackedAreas;
-    const getShips = () => ships;
 
     const placeShip = (shipLen, originRow, originCol, dir) => {
         const newShipCoords = callculateShipCoord(
@@ -32,19 +27,19 @@ const Gameboard = (_dimension = 10) => {
             originCol,
             dir
         );
-        const isCollide = newShipCoords.some(
+        const isCrashWithOthers = newShipCoords.some(
             ([row, col]) => placedShips[row][col] !== null
         );
-        if (isCollide) throw new Error("Ship collide with other ships");
+        if (isCrashWithOthers) throw new Error("Ship collide with other ships");
 
         const newShip = Ship(shipLen);
-        let countShips = ships.push(newShip);
+        let numOfShip = ships.push(newShip);
         newShipCoords.forEach(([row, col]) => {
-            placedShips[row][col] = ships[countShips - 1];
+            placedShips[row][col] = ships[numOfShip - 1];
         });
     };
 
-    callculateShipCoord = (shipLen, originRow, originCol, dir) => {
+    const callculateShipCoord = (shipLen, originRow, originCol, dir) => {
         if (!(dir === "h" || dir === "v")) throw new Error("Invalid direction");
         if (
             originRow < 0 ||
@@ -71,27 +66,44 @@ const Gameboard = (_dimension = 10) => {
     };
 
     const receiveAttack = (row, col) => {
-        if (attackedAreas[row][col] === true)
+        // Small validation
+        if (!Number.isInteger(row) || !Number.isInteger(col)) {
+            throw new Error("Coord must be an integer");
+        }
+        if (row >= dimension || col >= dimension)
+            throw new Error("Attack coord out of bonds");
+
+        if (attackedCoords[row][col] === true)
             throw new Error("Area already attacked");
-        attackedAreas[row][col] = true;
+
+        attackedCoords[row][col] = true; // Update attack coord
 
         const attackedShip = placedShips[row][col];
-        console.log(attackedShip);
-        // Miss
-        if (attackedShip === null) return false;
-        // Attack hit an ship.
-        // ships[attackedShip].hit();
-        attackedShip.hit();
+        if (attackedShip === null) return false; // Miss
+
+        attackedShip.hit(); // Attack hit an ship.
         return true;
     };
 
+    const retrieveAvailableAttackCord = () => {
+        let availableMoves = [];
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 10; col++) {
+                if (attackedCoords[row][col] === false)
+                    availableMoves.push([row, col]);
+            }
+        }
+        return availableMoves;
+    };
+
     return {
-        getPlacedShips,
-        getAttackedAreas,
-        getShips,
+        placedShips,
+        attackedCoords,
+        ships,
         allSunken,
         placeShip,
         receiveAttack,
+        retrieveAvailableAttackCord,
     };
 };
 

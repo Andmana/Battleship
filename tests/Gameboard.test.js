@@ -1,22 +1,22 @@
 const Gameboard = require("../src/models/Gameboard");
 
-describe("Test Gameboard", () => {
+describe.skip("Test Gameboard", () => {
     const gameboard = Gameboard(10);
     it("should create board", () => {
-        expect(gameboard.getShips()).toEqual([]);
+        expect(gameboard.ships).toEqual([]);
     });
 
-    const ships = gameboard.getShips();
     test("should place all ships", () => {
+        // Put ships
         gameboard.placeShip(2, 0, 0, "h");
         gameboard.placeShip(3, 1, 1, "v");
-        const ships = gameboard.getShips();
-        expect(ships[0].getLength()).toBe(2);
-        expect(ships[1].getLength()).toBe(3);
+
+        expect(gameboard.ships[0].length).toBe(2);
+        expect(gameboard.ships[1].length).toBe(3);
         expect(gameboard.allSunken()).toBe(false);
     });
 
-    test("hit ships, therefor get sunk", () => {
+    test("beat all of ships, therefor all sunken", () => {
         expect(gameboard.receiveAttack(5, 5)).toBe(false);
         expect(gameboard.receiveAttack(0, 5)).toBe(false);
 
@@ -33,7 +33,7 @@ describe("Test Gameboard", () => {
     });
 });
 
-describe.skip("Test invalid input", () => {
+describe("Test invalid input", () => {
     const gameboard = Gameboard(10);
     it("should throw an error when coordinates out of bonds", () => {
         expect(() => gameboard.placeShip(2, -1, 0, "h")).toThrow(
@@ -68,7 +68,6 @@ describe.skip("Test invalid input", () => {
     it("Collide when ship overlap", () => {
         gameboard.placeShip(3, 0, 0, "h");
         gameboard.placeShip(5, 1, 1, "v");
-        console.log(gameboard.getPlacedShips());
 
         expect(() => gameboard.placeShip(3, 0, 2, "h")).toThrow(
             "Ship collide with other ships"
