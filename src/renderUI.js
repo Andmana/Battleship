@@ -31,19 +31,19 @@ const setClass = (val, selector) => {
 };
 
 const computerBoardEvents = (callback) => {
-    const coords = document.querySelectorAll("#bot-area > div");
+    const coords = document.querySelectorAll("#computer-area > div");
     coords.forEach((coord) => {
         coord.addEventListener("click", callback);
     });
 };
 
 const disableComBoardEvent = () => {
-    const board = document.querySelector("#bot-area");
+    const board = document.querySelector("#computer-area");
     board.style.pointerEvents = "none";
 };
 
 const enableComBoardEvent = () => {
-    const board = document.querySelector("#bot-area");
+    const board = document.querySelector("#computer-area");
     board.style.pointerEvents = "auto";
 };
 
@@ -55,7 +55,7 @@ const setPlayerCoordClass = (row, col, isHit) => {
     else attackedDiv.classList.add("attack-miss");
 };
 
-const setBotCoordClass = (element, isHit) => {
+const setComCoordClass = (element, isHit) => {
     if (isHit) element.classList.add("attack-hit");
     else element.classList.add("attack-miss");
 };
@@ -120,7 +120,7 @@ module.exports = {
     disableComBoardEvent,
     enableComBoardEvent,
     setPlayerCoordClass,
-    setBotCoordClass,
+    setComCoordClass,
     setComputerLine,
     setPlayerLine,
     displayGameOverMessage,

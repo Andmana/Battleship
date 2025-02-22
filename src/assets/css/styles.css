@@ -148,7 +148,7 @@ body {
     gap: 10px;
 }
 
-#bot-board .ships {
+#computer-board .ships {
     align-items: end;
 }
 
@@ -173,7 +173,7 @@ body {
     box-shadow: inset 10px 0px 146px 30px var(--hero-radar);
 }
 
-#bot-board .area {
+#computer-board .area {
     -webkit-box-shadow: inset 10px 0px 146px 30px var(--villain-radar);
     -moz-box-shadow: inset 10px 0px 146px 30px var(--villain-radar);
     box-shadow: inset 10px 0px 146px 40px var(--villain-radar);

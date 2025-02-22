@@ -5,7 +5,7 @@ const {
     enableComBoardEvent,
     computerBoardEvents,
     setPlayerCoordClass,
-    setBotCoordClass,
+    setComCoordClass,
     displayGameOverMessage,
     setPlayerLine,
     setComputerLine,
@@ -33,7 +33,7 @@ const gameController = () => {
 
     // Load/generate board ui
     loadBoard(player.gameboard.placedShips, "player");
-    loadBoard(computer.gameboard.placedShips, "bot");
+    loadBoard(computer.gameboard.placedShips, "computer");
 
     const handlePlayerMove = (event) => {
         if (isGameOver) return;
@@ -46,7 +46,7 @@ const gameController = () => {
         setPlayerLine("attack");
 
         const isHit = computer.gameboard.receiveAttack(row, col);
-        setBotCoordClass(coord, isHit);
+        setComCoordClass(coord, isHit);
 
         if (computer.gameboard.allSunken()) {
             isGameOver = true;
