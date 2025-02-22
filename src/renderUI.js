@@ -27,6 +27,7 @@ const loadBoard = (playerBoard, selector) => {
 };
 
 const setClass = (val, selector) => {
+    // if (val != null) return "white";
     if (selector === "player" && val != null) return "white";
     return "";
 };
@@ -132,6 +133,20 @@ const displayShips = (ships, playerType) => {
     });
 };
 
+const displayShipsOnBoard = (shipsCoords, ships) => {
+    shipsCoords.forEach(([row, col, dir], index) => {
+        const divCoord = document.querySelector(
+            `#player-board > div[data-row="${row}"][data-col="${col}"]`
+        );
+        const shipIcon = document.createElement("img");
+        shipIcon.src = shipImages[ships[index].length];
+        shipIcon.className = `ship-icon ship-${
+            ships[index].length
+        } ship-on-board ${dir === "v" ? "rotate-90" : ""}`;
+        divCoord.append(shipIcon);
+    });
+};
+
 const updateShipStatus = (ships, playerType) => {
     ships.forEach((ship, index) => {
         if (ship.isSunk())
@@ -152,6 +167,7 @@ module.exports = {
     setComputerLine,
     setPlayerLine,
     displayGameOverMessage,
+    displayShipsOnBoard,
     displayShips,
     updateShipStatus,
 };

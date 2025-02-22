@@ -12,6 +12,7 @@ const {
     setComputerLine,
     displayShips,
     updateShipStatus,
+    displayShipsOnBoard,
 } = require("./renderUI");
 
 const gameController = () => {
@@ -23,6 +24,10 @@ const gameController = () => {
     player.gameboard.placeShipBatch(generateShips(5, 10));
     loadBoard(player.gameboard.placedShips, "player");
     displayShips(player.gameboard.ships, "player");
+    displayShipsOnBoard(
+        player.gameboard.shipsOriginCoords,
+        player.gameboard.ships
+    );
 
     computer.gameboard.placeShipBatch(generateShips(5, 10));
     loadBoard(computer.gameboard.placedShips, "computer");

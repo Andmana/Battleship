@@ -35,7 +35,7 @@ const Gameboard = (_dimension = 10) => {
 
         const newShip = Ship(shipLen);
         let numOfShip = ships.push(newShip);
-        shipsOriginCoords.push([originRow, originCol]);
+        shipsOriginCoords.push([originRow, originCol, dir]);
 
         newShipCoords.forEach(([row, col]) => {
             placedShips[row][col] = ships[numOfShip - 1];
@@ -110,6 +110,7 @@ const Gameboard = (_dimension = 10) => {
         placedShips,
         attackedCoords,
         ships,
+        shipsOriginCoords,
         allSunken,
         placeShip,
         placeShipBatch,
