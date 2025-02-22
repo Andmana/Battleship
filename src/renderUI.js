@@ -1,3 +1,13 @@
+const {
+    getVillainLosingLine,
+    getVillainWinningLine,
+    getHeroCounterLine,
+    getHeroGetHitLine,
+    getHeroNoDamageLine,
+    getVillainNoDamageLine,
+    getVillainCounterLine,
+} = require("./utils");
+
 const loadBoard = (board, selector) => {
     const area = document.querySelector(`#${selector}-area`);
     let innerHtml = "";
@@ -50,19 +60,56 @@ const setBotCoordClass = (element, isHit) => {
     else element.classList.add("attack-miss");
 };
 
+const displayGameOverMessage = (isPlayerWin) => {
+    const dialog = document.querySelector("dialog");
+    dialog.showModal();
+
+    const result = document.querySelector("#message-result");
+    const villainLines = document.querySelector("#last-words");
+    if (isPlayerWin) {
+        result.textContent = "Congratulations, You Wins";
+        villainLines.textContent = getVillainLosingLine();
+    } else {
+        result.textContent = "Too bad, You Lose";
+        villainLines.textContent = getVillainWinningLine();
+    }
+};
+
+const setPlayerLine = (message) => {
+    const box = document.querySelector("#player-msg  .message-box");
+
+    if (message === "attack")
+        box.innerHTML = `<div class="typed-out">${getHeroCounterLine()}</div>`;
+    else if (message === "no hit")
+        box.innerHTML = `<div class="typed-out">${getHeroNoDamageLine()}</div>`;
+    else if (message === "attacked")
+        box.innerHTML = `<div class="typed-out">${getHeroGetHitLine()}</div>`;
+};
+
+const setComputerLine = (message) => {
+    const box = document.querySelector("#computer-msg  .message-box");
+
+    if (message === "attack")
+        box.innerHTML = `<div class="typed-out">${getVillainCounterLine()}</div>`;
+    else if (message === "no hit")
+        box.innerHTML = `<div class="typed-out">${getVillainNoDamageLine()}</div>`;
+    else if (message === "attacked")
+        box.innerHTML = `<div class="typed-out">${getVillainGetHitLine()}</div>`;
+};
+
 const dialogRender = () => {
     const dialog = document.querySelector("dialog");
-    const showButton = document.querySelector("#showDialog");
     const closeButton = document.querySelector("dialog button");
-
-    // "Show the dialog" button opens the dialog modally
-    showButton.addEventListener("click", () => {
-        dialog.showModal();
-    });
 
     // "Close" button closes the dialog
     closeButton.addEventListener("click", () => {
         dialog.close();
+    });
+
+    // "Show the dialog" button opens the dialog modally
+    const showButton = document.querySelector("#showDialog");
+    showButton.addEventListener("click", () => {
+        dialog.showModal();
     });
 };
 
@@ -74,4 +121,7 @@ module.exports = {
     enableComBoardEvent,
     setPlayerCoordClass,
     setBotCoordClass,
+    setComputerLine,
+    setPlayerLine,
+    displayGameOverMessage,
 };

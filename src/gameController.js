@@ -6,6 +6,9 @@ const {
     computerBoardEvents,
     setPlayerCoordClass,
     setBotCoordClass,
+    displayGameOverMessage,
+    setPlayerLine,
+    setComputerLine,
 } = require("./renderUI");
 
 const gameController = () => {
@@ -15,10 +18,10 @@ const gameController = () => {
 
     const shipsCoords = [
         [2, 0, 2, "h"],
-        [2, 9, 7, "h"],
-        [3, 3, 2, "v"],
-        [4, 5, 3, "v"],
-        [5, 6, 4, "h"],
+        // [2, 9, 7, "h"],
+        // [3, 3, 2, "v"],
+        // [4, 5, 3, "v"],
+        // [5, 6, 4, "h"],
     ];
 
     //Placed ship on board
@@ -40,17 +43,18 @@ const gameController = () => {
         const col = parseInt(coord.dataset.col);
 
         disableComBoardEvent();
+        setPlayerLine("attack");
 
         const isHit = computer.gameboard.receiveAttack(row, col);
         setBotCoordClass(coord, isHit);
 
         if (computer.gameboard.allSunken()) {
             isGameOver = true;
-            // displayGameOverMessage("Player wins");
+            displayGameOverMessage(true);
             return;
         }
 
-        if (!isHit) setTimeout(computerMove, 500);
+        if (!isHit) setTimeout(computerMove, 1500);
         else enableComBoardEvent();
     };
 
@@ -62,17 +66,18 @@ const gameController = () => {
 
         const [row, col] =
             availableMoves[Math.floor(Math.random() * availableMoves.length)];
+        setComputerLine("attack");
 
         const isHit = player.gameboard.receiveAttack(row, col);
         setPlayerCoordClass(row, col, isHit);
 
         if (player.gameboard.allSunken()) {
             isGameOver = true;
-            // displayGameOverMessage("Computer wins");
+            displayGameOverMessage(false);
             return;
         }
 
-        if (isHit) setTimeout(computerMove, 500);
+        if (isHit) setTimeout(computerMove, 1500);
         else enableComBoardEvent();
     }
 

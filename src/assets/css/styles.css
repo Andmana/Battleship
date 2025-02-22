@@ -48,7 +48,6 @@ body {
 
 .message {
     width: 100%;
-
     position: relative;
 }
 
@@ -57,32 +56,31 @@ body {
     height: 70px;
 
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 40px;
-
     padding: 0 clamp(10px, 15vw, 300px);
 }
 
-.message-box {
-    flex: 1;
-    width: 100%;
-    justify-self: unset;
-
-    display: flex;
+#player-msg {
     justify-content: start;
 }
 
-.message-box h1 {
-    width: fit-content;
-    overflow: hidden; /* Ensures the content is not revealed until the animation */
-    white-space: nowrap; /* Keeps the content on a single line */
-    letter-spacing: 0.15em; /* Adjust as needed */
-    animation: typing 1s steps(40, end);
+#computer-msg {
+    justify-content: end;
 }
 
-#bot-msg .message-box {
-    justify-content: end;
+.message-box {
+    display: inline-block;
+}
+
+.typed-out {
+    font-size: 1.6rem;
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: 0.15em solid rgb(0, 0, 0); /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: 0.15em; /* Adjust as needed */
+    animation: typing 0.5s steps(60, end), blink-caret 0.75s step-end infinite;
 }
 
 /* The typing effect */
@@ -95,20 +93,23 @@ body {
     }
 }
 
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from,
+    to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: rgb(255, 255, 255);
+    }
+}
+
 #player-msg {
     background-color: var(--hero-color);
 }
 
-#player-msg div {
-    text-align: start;
-}
-
-#bot-msg {
+#computer-msg {
     background-color: var(--villain-color);
-}
-
-#bot-msg div {
-    text-align: end;
 }
 
 .message img {
@@ -299,16 +300,15 @@ dialog button:hover {
     height: 90px;
 }
 
-#winner-message {
-    text-align: center;
+#ballon-text {
     position: relative;
     background: #00aabb;
     border-radius: 0.4em;
-    width: 120px;
+    min-width: 120px;
     margin-left: 30px;
 }
 
-#winner-message:after {
+#ballon-text:after {
     content: "";
     position: absolute;
     left: 0;
@@ -321,6 +321,10 @@ dialog button:hover {
     border-top: 0;
     margin-top: -10px;
     margin-left: -20px;
+}
+
+#last-words {
+    font-size: 1em;
 }
 /* 
   ##Device = Desktops
