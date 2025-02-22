@@ -132,6 +132,15 @@ const displayShips = (ships, playerType) => {
     });
 };
 
+const updateShipStatus = (ships, playerType) => {
+    ships.forEach((ship, index) => {
+        if (ship.isSunk())
+            document.querySelector(
+                `#${playerType}-area .ships > img[data-index="${index}"]`
+            ).className = `ship-icon ship-${ship.length} ship-is-sunk`;
+    });
+};
+
 module.exports = {
     dialogRender,
     loadBoard,
@@ -144,4 +153,5 @@ module.exports = {
     setPlayerLine,
     displayGameOverMessage,
     displayShips,
+    updateShipStatus,
 };

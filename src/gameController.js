@@ -10,6 +10,7 @@ const {
     setPlayerLine,
     setComputerLine,
     displayShips,
+    updateShipStatus,
 } = require("./renderUI");
 
 const gameController = () => {
@@ -19,10 +20,10 @@ const gameController = () => {
 
     const shipsCoords = [
         [2, 0, 2, "h"],
-        // [2, 9, 7, "h"],
-        // [3, 3, 2, "v"],
-        // [4, 5, 3, "v"],
-        // [5, 6, 4, "h"],
+        [2, 9, 7, "h"],
+        [3, 3, 2, "v"],
+        [4, 5, 3, "v"],
+        [5, 6, 4, "h"],
     ];
 
     //Placed ship on board
@@ -57,8 +58,12 @@ const gameController = () => {
             return;
         }
 
-        if (!isHit) setTimeout(computerMove, 1500);
-        else enableComBoardEvent();
+        if (!isHit) {
+            setTimeout(computerMove, 1500);
+        } else {
+            enableComBoardEvent();
+            updateShipStatus(computer.gameboard.ships, "computer");
+        }
     };
 
     function computerMove() {
@@ -80,8 +85,12 @@ const gameController = () => {
             return;
         }
 
-        if (isHit) setTimeout(computerMove, 1500);
-        else enableComBoardEvent();
+        if (isHit) {
+            setTimeout(computerMove, 1500);
+        } else {
+            enableComBoardEvent();
+            updateShipStatus(player.gameboard.ships, "player");
+        }
     }
 
     // attach events on computer board
