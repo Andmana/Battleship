@@ -50,7 +50,24 @@ const setBotCoordClass = (element, isHit) => {
     else element.classList.add("attack-miss");
 };
 
+const dialogRender = () => {
+    const dialog = document.querySelector("dialog");
+    const showButton = document.querySelector("#showDialog");
+    const closeButton = document.querySelector("dialog button");
+
+    // "Show the dialog" button opens the dialog modally
+    showButton.addEventListener("click", () => {
+        dialog.showModal();
+    });
+
+    // "Close" button closes the dialog
+    closeButton.addEventListener("click", () => {
+        dialog.close();
+    });
+};
+
 module.exports = {
+    dialogRender,
     loadBoard,
     computerBoardEvents,
     disableComBoardEvent,
