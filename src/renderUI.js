@@ -109,10 +109,10 @@ const dialogRender = () => {
     });
 
     // "Show the dialog" button opens the dialog modally
-    const showButton = document.querySelector("#showDialog");
-    showButton.addEventListener("click", () => {
-        dialog.showModal();
-    });
+    // const showButton = document.querySelector("#showDialog");
+    // showButton.addEventListener("click", () => {
+    //     dialog.showModal();
+    // });
 };
 
 const displayShips = (ships, playerType) => {
@@ -156,6 +156,32 @@ const updateShipStatus = (ships, playerType) => {
     });
 };
 
+const setStartEvent = (callback) => {
+    const startBtn = document.querySelector("#start");
+    startBtn.addEventListener("click", () => {
+        callback();
+        document.querySelector(".pre-start").style.display = "none";
+        document.querySelector(".set-up").style.display = "flex";
+        // document.querySelector(".main").style.display = "flex";
+    });
+};
+
+const loadTempBoard = () => {
+    const board = document.querySelector(`.set-up .board`);
+    let innerHtml = "";
+
+    for (let row = 0; row < 10; row++) {
+        for (let col = 0; col < 10; col++) {
+            innerHtml += `
+                <div 
+                    data-row="${row}" data-col="${col}">
+                </div>
+            `;
+        }
+    }
+    board.innerHTML = innerHtml;
+};
+
 module.exports = {
     dialogRender,
     loadBoard,
@@ -170,4 +196,6 @@ module.exports = {
     displayShipsOnBoard,
     displayShips,
     updateShipStatus,
+    setStartEvent,
+    loadTempBoard,
 };

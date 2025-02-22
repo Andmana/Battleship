@@ -31,6 +31,7 @@ const Gameboard = (_dimension = 10) => {
         const isCrashWithOthers = newShipCoords.some(
             ([row, col]) => placedShips[row][col] !== null
         );
+        console.log(shipLen, originRow, originCol, dir);
         if (isCrashWithOthers) throw new Error("Ship collide with other ships");
 
         const newShip = Ship(shipLen);

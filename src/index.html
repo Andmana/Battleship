@@ -10,7 +10,54 @@
             <div class="header">
                 <div class="hero">Battleship</div>
             </div>
-            <div class="main">
+            <div class="pre-start" style="display: none">
+                <div class="titles">
+                    Welcome, Sir. Our soldiers are ready to commence the
+                    operation. We await your command.
+                </div>
+                <div><button id="start">Start Game</button></div>
+            </div>
+            <div class="set-up">
+                <div class="titles">
+                    Welcome, Sir. Our soldiers are ready to commence the
+                    operation. We await your command.
+                </div>
+
+                <div class="ships-horizontal">
+                    <img
+                        src="./assets/images/ship-2.svg"
+                        class="ship-icon ship-2"
+                        alt=""
+                    />
+                    <img
+                        src="./assets/images/ship-2.svg"
+                        class="ship-icon ship-2"
+                        alt=""
+                    />
+                    <img
+                        src="./assets/images/ship-3.svg"
+                        class="ship-icon ship-3"
+                        alt=""
+                    />
+                    <img
+                        src="./assets/images/ship-4.svg"
+                        class="ship-icon ship-4"
+                        alt=""
+                    />
+                    <img
+                        src="./assets/images/ship-5.svg"
+                        class="ship-icon ship-5"
+                        alt=""
+                    />
+                </div>
+                <div id="rotate">
+                    Type <span>"R"</span> or tap here to rotate
+                </div>
+
+                <div class="board"></div>
+                <div><button id="play">attack</button></div>
+            </div>
+            <div class="main" style="display: none">
                 <div class="message">
                     <div id="player-msg">
                         <img alt="" src="./assets/images/hero.png" />
@@ -22,7 +69,7 @@
                     </div>
                 </div>
                 <div class="areas">
-                    <div id="player-area">
+                    <div id="player-area" class="area">
                         <div id="player-board" class="board"></div>
                         <div class="ships">
                             <img
@@ -52,7 +99,7 @@
                             />
                         </div>
                     </div>
-                    <div id="computer-area">
+                    <div id="computer-area" class="area">
                         <div class="ships">
                             <img
                                 src="./assets/images/ship-2.svg"
@@ -91,7 +138,6 @@
                 </a>
             </div>
         </div>
-        <button id="showDialog">click</button>
         <dialog>
             <div>
                 <div id="message-result"></div>

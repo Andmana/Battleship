@@ -13,6 +13,7 @@ const {
     displayShips,
     updateShipStatus,
     displayShipsOnBoard,
+    setStartEvent,
 } = require("./renderUI");
 
 const gameController = () => {
@@ -20,18 +21,26 @@ const gameController = () => {
     const computer = Player("Comp");
     const player = Player();
 
-    // Load/generate board ui
-    player.gameboard.placeShipBatch(generateShips(5, 10));
-    loadBoard(player.gameboard.placedShips, "player");
-    displayShips(player.gameboard.ships, "player");
-    displayShipsOnBoard(
-        player.gameboard.shipsOriginCoords,
-        player.gameboard.ships
-    );
+    const initiateGame = () => {};
 
-    computer.gameboard.placeShipBatch(generateShips(5, 10));
-    loadBoard(computer.gameboard.placedShips, "computer");
-    displayShips(computer.gameboard.ships, "computer");
+    const playGame = () => {
+        // Load/generate board ui
+        player.gameboard.placeShipBatch(generateShips(5, 10));
+        loadBoard(player.gameboard.placedShips, "player");
+        displayShips(player.gameboard.ships, "player");
+        displayShipsOnBoard(
+            player.gameboard.shipsOriginCoords,
+            player.gameboard.ships
+        );
+
+        computer.gameboard.placeShipBatch(generateShips(5, 10));
+        loadBoard(computer.gameboard.placedShips, "computer");
+        displayShips(computer.gameboard.ships, "computer");
+
+        computerBoardEvents(handlePlayerMove);
+    };
+
+    setStartEvent(playGame);
 
     const handlePlayerMove = (event) => {
         if (isGameOver) return;
@@ -87,8 +96,11 @@ const gameController = () => {
         }
     }
 
+    return {
+        playGame,
+    };
+
     // attach events on computer board
-    computerBoardEvents(handlePlayerMove);
 };
 
 module.exports = gameController;
