@@ -8,21 +8,21 @@ const {
     getVillainCounterLine,
 } = require("./utils");
 
-const loadBoard = (board, selector) => {
-    const area = document.querySelector(`#${selector}-area`);
+const loadBoard = (playerBoard, selector) => {
+    const board = document.querySelector(`#${selector}-board`);
     let innerHtml = "";
 
     for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
             innerHtml += `
                 <div 
-                    class="${setClass(board[row][col], selector)}" 
+                    class="${setClass(playerBoard[row][col], selector)}" 
                     data-row="${row}" data-col="${col}">
                 </div>
             `;
         }
     }
-    area.innerHTML = innerHtml;
+    board.innerHTML = innerHtml;
 };
 
 const setClass = (val, selector) => {
@@ -31,25 +31,25 @@ const setClass = (val, selector) => {
 };
 
 const computerBoardEvents = (callback) => {
-    const coords = document.querySelectorAll("#computer-area > div");
+    const coords = document.querySelectorAll("#computer-board > div");
     coords.forEach((coord) => {
         coord.addEventListener("click", callback);
     });
 };
 
 const disableComBoardEvent = () => {
-    const board = document.querySelector("#computer-area");
+    const board = document.querySelector("#computer-board");
     board.style.pointerEvents = "none";
 };
 
 const enableComBoardEvent = () => {
-    const board = document.querySelector("#computer-area");
+    const board = document.querySelector("#computer-board");
     board.style.pointerEvents = "auto";
 };
 
 const setPlayerCoordClass = (row, col, isHit) => {
     const attackedDiv = document.querySelector(
-        `#player-area > div[data-row="${row}"][data-col="${col}"]`
+        `#player-board > div[data-row="${row}"][data-col="${col}"]`
     );
     if (isHit) attackedDiv.classList.add("attack-hit");
     else attackedDiv.classList.add("attack-miss");
