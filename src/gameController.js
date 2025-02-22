@@ -9,6 +9,7 @@ const {
     displayGameOverMessage,
     setPlayerLine,
     setComputerLine,
+    displayShips,
 } = require("./renderUI");
 
 const gameController = () => {
@@ -34,6 +35,8 @@ const gameController = () => {
     // Load/generate board ui
     loadBoard(player.gameboard.placedShips, "player");
     loadBoard(computer.gameboard.placedShips, "computer");
+    displayShips(player.gameboard.ships, "player");
+    displayShips(computer.gameboard.ships, "computer");
 
     const handlePlayerMove = (event) => {
         if (isGameOver) return;

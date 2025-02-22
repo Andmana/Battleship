@@ -6,6 +6,7 @@ const {
     getHeroNoDamageLine,
     getVillainNoDamageLine,
     getVillainCounterLine,
+    shipImages,
 } = require("./utils");
 
 const loadBoard = (playerBoard, selector) => {
@@ -113,6 +114,24 @@ const dialogRender = () => {
     });
 };
 
+const displayShips = (ships, playerType) => {
+    const lengthIds = [];
+    ships.forEach((ship, index) => {
+        lengthIds.push([ship.length, index]);
+    });
+    lengthIds.sort((a, b) => a[0] - b[0]);
+
+    const shipsContainer = document.querySelector(`#${playerType}-area .ships`);
+    shipsContainer.innerHTML = "";
+    lengthIds.forEach(([length, id]) => {
+        const ship = document.createElement("img");
+        ship.className = `ship-icon ship-${length}`;
+        ship.dataset.index = id;
+        ship.src = shipImages[length];
+        shipsContainer.appendChild(ship);
+    });
+};
+
 module.exports = {
     dialogRender,
     loadBoard,
@@ -124,4 +143,5 @@ module.exports = {
     setComputerLine,
     setPlayerLine,
     displayGameOverMessage,
+    displayShips,
 };

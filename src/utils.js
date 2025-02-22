@@ -1,3 +1,15 @@
+const shipIcon3 = require("./assets/images/ship-3.svg");
+const shipIcon4 = require("./assets/images/ship-4.svg");
+const shipIcon5 = require("./assets/images/ship-5.svg");
+const shipIcon2 = require("./assets/images/ship-2.svg");
+
+const shipImages = {
+    2: shipIcon2,
+    3: shipIcon3,
+    4: shipIcon4,
+    5: shipIcon5,
+};
+
 const villains = {
     winningLines: [
         "All your efforts... for nothing.",
@@ -91,16 +103,6 @@ function getVillainLosingLine() {
     return villains.lossingLines[index];
 }
 
-// function getVillainGetHitLine() {
-//     const index = Math.floor(Math.random() * villains.getHitLines.length);
-//     return villains.getHitLines[index];
-// }
-
-// function getVillainNoDamageLine() {
-//     const index = Math.floor(Math.random() * villains.noDamageLines.length);
-//     return villains.noDamageLines[index];
-// }
-
 function getVillainCounterLine() {
     const index = Math.floor(Math.random() * villains.counterLines.length);
     return villains.counterLines[index];
@@ -110,6 +112,15 @@ function getHeroCounterLine() {
     const index = Math.floor(Math.random() * heroes.counterLines.length);
     return heroes.counterLines[index];
 }
+// function getVillainGetHitLine() {
+//     const index = Math.floor(Math.random() * villains.getHitLines.length);
+//     return villains.getHitLines[index];
+// }
+
+// function getVillainNoDamageLine() {
+//     const index = Math.floor(Math.random() * villains.noDamageLines.length);
+//     return villains.noDamageLines[index];
+// }
 
 // function getHeroGetHitLine() {
 //     const index = Math.floor(Math.random() * heroes.getHitLines.length);
@@ -122,12 +133,13 @@ function getHeroCounterLine() {
 // }
 
 module.exports = {
+    shipImages,
     getHeroCounterLine,
-    // getHeroGetHitLine,
-    // getHeroNoDamageLine,
     getVillainCounterLine,
-    // getVillainGetHitLine,
-    // getVillainNoDamageLine,
     getVillainLosingLine,
     getVillainWinningLine,
+    // getHeroGetHitLine,
+    // getHeroNoDamageLine,
+    // getVillainGetHitLine,
+    // getVillainNoDamageLine,
 };
