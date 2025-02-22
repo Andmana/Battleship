@@ -1,4 +1,5 @@
 const Player = require("./models/Player");
+const generateShips = require("./random");
 const {
     loadBoard,
     disableComBoardEvent,
@@ -18,25 +19,13 @@ const gameController = () => {
     const computer = Player("Comp");
     const player = Player();
 
-    const shipsCoords = [
-        [2, 0, 2, "h"],
-        [2, 9, 7, "h"],
-        [3, 3, 2, "v"],
-        [4, 5, 3, "v"],
-        [5, 6, 4, "h"],
-    ];
-
-    //Placed ship on board
-    shipsCoords.forEach((coord) => {
-        const [len, row, col, dir] = coord;
-        player.gameboard.placeShip(len, row, col, dir);
-        computer.gameboard.placeShip(len, row, col, dir);
-    });
-
     // Load/generate board ui
+    player.gameboard.placeShipBatch(generateShips(5, 10));
     loadBoard(player.gameboard.placedShips, "player");
-    loadBoard(computer.gameboard.placedShips, "computer");
     displayShips(player.gameboard.ships, "player");
+
+    computer.gameboard.placeShipBatch(generateShips(5, 10));
+    loadBoard(computer.gameboard.placedShips, "computer");
     displayShips(computer.gameboard.ships, "computer");
 
     const handlePlayerMove = (event) => {

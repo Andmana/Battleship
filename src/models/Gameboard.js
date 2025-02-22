@@ -4,6 +4,7 @@ const Gameboard = (_dimension = 10) => {
     //
     const dimension = _dimension;
     const ships = [];
+    const shipsOriginCoords = [];
     const placedShips = new Array(dimension)
         .fill(null)
         .map(() => new Array(dimension).fill(null));
@@ -34,8 +35,17 @@ const Gameboard = (_dimension = 10) => {
 
         const newShip = Ship(shipLen);
         let numOfShip = ships.push(newShip);
+        shipsOriginCoords.push([originRow, originCol]);
+
         newShipCoords.forEach(([row, col]) => {
             placedShips[row][col] = ships[numOfShip - 1];
+        });
+    };
+
+    const placeShipBatch = (coords) => {
+        coords.forEach((coord) => {
+            const [len, row, col, dir] = coord;
+            placeShip(len, row, col, dir);
         });
     };
 
@@ -102,6 +112,7 @@ const Gameboard = (_dimension = 10) => {
         ships,
         allSunken,
         placeShip,
+        placeShipBatch,
         receiveAttack,
         retrieveAvailableAttackCord,
     };
