@@ -74,7 +74,7 @@ body {
 }
 
 .typed-out {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     overflow: hidden; /* Ensures the content is not revealed until the animation */
     border-right: 0.15em solid rgb(0, 0, 0); /* The typwriter cursor */
     white-space: nowrap; /* Keeps the content on a single line */

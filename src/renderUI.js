@@ -80,10 +80,10 @@ const setPlayerLine = (message) => {
 
     if (message === "attack")
         box.innerHTML = `<div class="typed-out">${getHeroCounterLine()}</div>`;
-    else if (message === "no hit")
-        box.innerHTML = `<div class="typed-out">${getHeroNoDamageLine()}</div>`;
-    else if (message === "attacked")
-        box.innerHTML = `<div class="typed-out">${getHeroGetHitLine()}</div>`;
+    // else if (message === "no hit")
+    //     box.innerHTML = `<div class="typed-out">${getHeroNoDamageLine()}</div>`;
+    // else if (message === "attacked")
+    //     box.innerHTML = `<div class="typed-out">${getHeroGetHitLine()}</div>`;
 };
 
 const setComputerLine = (message) => {
@@ -91,10 +91,10 @@ const setComputerLine = (message) => {
 
     if (message === "attack")
         box.innerHTML = `<div class="typed-out">${getVillainCounterLine()}</div>`;
-    else if (message === "no hit")
-        box.innerHTML = `<div class="typed-out">${getVillainNoDamageLine()}</div>`;
-    else if (message === "attacked")
-        box.innerHTML = `<div class="typed-out">${getVillainGetHitLine()}</div>`;
+    // else if (message === "no hit")
+    //     box.innerHTML = `<div class="typed-out">${getVillainNoDamageLine()}</div>`;
+    // else if (message === "attacked")
+    //     box.innerHTML = `<div class="typed-out">${getVillainGetHitLine()}</div>`;
 };
 
 const dialogRender = () => {
