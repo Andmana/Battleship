@@ -1,3 +1,4 @@
+const { dragNdropEvents } = require("./dragNdrop");
 const Player = require("./models/Player");
 const generateShips = require("./random");
 const {
