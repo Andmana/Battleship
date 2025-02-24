@@ -104,12 +104,12 @@ body {
     margin-left: 1em;
 }
 
-#check:checked + .toggle > .toggle__circle {
+#is-multiplayer:checked + .toggle > .toggle__circle {
     background-color: hsl(0, 0%, 100%);
     margin-top: 0;
 }
 
-#check:checked + .toggle {
+#is-multiplayer:checked + .toggle {
     background-color: rgba(214, 214, 214, 0.479);
 }
 
