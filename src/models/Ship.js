@@ -10,6 +10,7 @@ const Ship = (_length) => {
 
     let length = _length;
     let hitCount = 0;
+    let id = null;
 
     const hit = () => {
         if (isSunk()) throw new Error("Ship already sunken");
@@ -21,10 +22,11 @@ const Ship = (_length) => {
     };
 
     return {
-        hit,
-        isSunk,
+        id,
         length,
         hitCount,
+        hit,
+        isSunk,
     };
 };
 
