@@ -29,15 +29,60 @@ function dragOver(e) {
 
 function dragEnter(e) {
     e.preventDefault();
-    this.classList.add("coord-valid");
+    const rowStart = parseInt(this.dataset.row);
+    const colStart = parseInt(this.dataset.col);
+
+    const dragging = document.querySelector(".dragging");
+    if (dragging == null) return;
+    const len = dragging.dataset.length;
+    for (let i = 0; i < len; i++) {
+        const row = rowStart;
+        const col = colStart + i;
+        if (col < 10 && row < 10)
+            document
+                .querySelector(
+                    `.set-up-board > div[data-row="${row}"][data-col="${col}"]`
+                )
+                .classList.add("coord-valid");
+    }
 }
 
 function dragLeave() {
-    this.classList.remove("coord-valid");
+    const rowStart = parseInt(this.dataset.row);
+    const colStart = parseInt(this.dataset.col);
+
+    const dragging = document.querySelector(".dragging");
+    if (dragging == null) return;
+    const len = dragging.dataset.length;
+    for (let i = 0; i < len; i++) {
+        const row = rowStart;
+        const col = colStart + i;
+        if (col < 10 && row < 10)
+            document
+                .querySelector(
+                    `.set-up-board > div[data-row="${row}"][data-col="${col}"]`
+                )
+                .classList.remove("coord-valid");
+    }
 }
 
 function dragDrop() {
-    this.classList.remove("coord-valid");
+    const rowStart = parseInt(this.dataset.row);
+    const colStart = parseInt(this.dataset.col);
+
+    const dragging = document.querySelector(".dragging");
+    if (dragging == null) return;
+    const len = dragging.dataset.length;
+    for (let i = 0; i < len; i++) {
+        const row = rowStart;
+        const col = colStart + i;
+        if (col < 10 && row < 10)
+            document
+                .querySelector(
+                    `.set-up-board > div[data-row="${row}"][data-col="${col}"]`
+                )
+                .classList.remove("coord-valid");
+    }
 }
 
 module.exports = { dragNdropEvents };
