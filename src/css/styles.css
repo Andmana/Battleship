@@ -1,3 +1,217 @@
+@font-face {
+    font-family: "MyCustomFont";
+    src: url("../assets/fonts/AmaticSC-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "MyCustomFont";
+    src: url("../assets/fonts/AmaticSC-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
 body {
-    background-color: black;
+    font-family: "MyCustomFont", sans-serif;
+}
+
+.app {
+    min-height: 100vh;
+    font-weight: 700;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    height: 30vh;
+    border-bottom: 2px solid black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1ch;
+}
+
+.header.shrink {
+    height: 10vh;
+}
+
+.hero {
+    font-size: 3rem;
+    font-weight: bold;
+    transform: scaleY(2);
+}
+
+.header.shrink .hero {
+    font-size: 2rem;
+    transform: scale(1.1);
+}
+
+.main {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* From Uiverse.io by Creatlydev */
+.choose-opponents {
+    color: hsl(0, 0%, 30%);
+    font-weight: 900;
+    display: flex;
+}
+
+.toggle {
+    width: 60px;
+    height: 155px;
+    background-color: hsl(0, 0%, 100%);
+    border-radius: 1.7rem;
+    padding: 0.25rem 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    transition: background-color 300ms 300ms;
+
+    border: 1px solid hsl(0, 0%, 30%);
+    transition: margin 500ms ease-in-out;
+}
+
+.toggle__circle {
+    width: 50px;
+    height: 50px;
+    background-color: hsla(0, 0%, 95%, 0.803);
+    border-radius: 50%;
+    margin-top: calc(155px - (0.25rem * 2) - 50px);
+    transition: margin 500ms ease-in-out;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.toggle-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    line-height: 0.8;
+    margin-left: 1em;
+}
+
+#check:checked + .toggle > .toggle__circle {
+    background-color: hsl(0, 0%, 100%);
+    margin-top: 0;
+}
+
+#check:checked + .toggle {
+    background-color: rgba(214, 214, 214, 0.479);
+}
+
+.input-group {
+    height: 70px;
+    font-size: 2em;
+    font-weight: 800;
+
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+#confirm {
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-top: 5vh;
+}
+
+/***************/
+/*             */
+/*    FOOTER   */
+/*             */
+/***************/
+
+.footer {
+    height: 50px;
+    border-top: 2px solid black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-image {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.footer a {
+    display: flex;
+    align-items: center;
+}
+
+.footer a div {
+    color: black;
+    font-weight: 600;
+    transform: scaleY(1.8);
+}
+
+@media (min-width: 1281px) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+
+@media (min-width: 481px) and (max-width: 767px) {
+    /* CSS */
+}
+
+/* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+
+@media (min-width: 320px) and (max-width: 480px) {
+    /* CSS */
+    .choose-opponents {
+        transform: scale(0.8);
+    }
 }
