@@ -1,4 +1,3 @@
-const { ids } = require("webpack");
 const Ship = require("./Ship");
 
 const Gameboard = (_dimension = 10) => {
