@@ -220,7 +220,7 @@ body {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
     gap: 1px;
-    background-color: #ccc;
+    background-color: #000000;
 }
 
 .gameboard-cell {
@@ -229,6 +229,10 @@ body {
     position: relative;
     background-color: white;
     overflow: visible;
+}
+
+.gameboard-cell[data-adjacent="true"]:not([data-id]) {
+    background-color: #ccc;
 }
 
 /* .gameboard-cell:hover {

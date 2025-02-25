@@ -1,3 +1,5 @@
+const getCellBy = require("./utils");
+
 const drag = () => {
     const ships = document.querySelectorAll(".unplaced-ship.drag-able");
     const body = document.querySelector("body");
@@ -66,11 +68,14 @@ const drag = () => {
                 direction
             );
             placedShip.classList.add("placed-ship");
-            boardCell.appendChild(placedShip);
-
+            if (isValidCells(boardCell))
+                placeShipOnBoard(boardCell, placedShip);
+            else {
+                shipRemoveInvisible(movingShip.dataset.id);
+            }
             clearHoverEffect();
         } else {
-            document.querySelector(".invisible").classList.remove("invisible");
+            shipRemoveInvisible(movingShip.dataset.id);
         }
 
         const draggings = document.querySelectorAll(".dragging");
@@ -144,10 +149,103 @@ const drag = () => {
         );
         lastHoveredCells = [];
     };
+
+    const isValidCells = (cell) => {
+        const row = parseInt(cell.dataset.row);
+        const col = parseInt(cell.dataset.col);
+
+        if ((direction === "h" ? col : row) + movingShipLength - 1 >= 10) {
+            console.log("1");
+            return false;
+        }
+
+        const adjacents = [
+            [-1, -1],
+            [-1, 0],
+            [-1, 1], // Atas
+            [0, -1],
+            [0, 1], // Kiri & Kanan
+            [1, -1],
+            [1, 0],
+            [1, 1], // Bawah
+        ];
+        let targetCell;
+        for (let i = 0; i < movingShipLength; i++) {
+            const targetRow = direction === "h" ? row : row + i;
+            const targetCol = direction === "h" ? col + i : col;
+
+            targetCell = getCellBy(".temporary-board", targetRow, targetCol);
+            if (
+                targetCell &&
+                (targetCell.dataset.adjacent || targetCell.dataset.id)
+            ) {
+                console.log("2");
+
+                return false;
+            }
+
+            for (const [dr, dc] of adjacents) {
+                const r = targetRow + dr,
+                    c = targetCol + dc;
+                targetCell = getCellBy(".temporary-board", r, c);
+                if (targetCell && targetCell.dataset.id) {
+                    console.log("3 ", r, c);
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    };
+
+    const placeShipOnBoard = (_startCell, ship) => {
+        const startCell = _startCell;
+        startCell.dataset.isStart = "true";
+        startCell.appendChild(ship);
+
+        const row = parseInt(startCell.dataset.row);
+        const col = parseInt(startCell.dataset.col);
+
+        const adjacents = [
+            [-1, -1],
+            [-1, 0],
+            [-1, 1], // Atas
+            [0, -1],
+            [0, 1], // Kiri & Kanan
+            [1, -1],
+            [1, 0],
+            [1, 1], // Bawah
+        ];
+        let targetCell;
+        for (let i = 0; i < ship.dataset.length; i++) {
+            const targetRow = direction === "h" ? row : row + i;
+            const targetCol = direction === "h" ? col + i : col;
+
+            targetCell = getCellBy(".temporary-board", targetRow, targetCol);
+            if (targetCell) {
+                targetCell.dataset.id = ship.dataset.id;
+            }
+
+            for (const [dr, dc] of adjacents) {
+                const r = targetRow + dr,
+                    c = targetCol + dc;
+                targetCell = getCellBy(".temporary-board", r, c);
+                if (targetCell) targetCell.dataset.adjacent = "true";
+            }
+        }
+    };
+
+    const shipRemoveInvisible = (id) => {
+        document
+            .querySelector(`.unplaced-ship[data-id="${id}"]`)
+            .classList.remove("invisible");
+    };
 };
 
-const createGrabShip = (id, _length, direction) => {
+const createGrabShip = (_id, _length, direction) => {
     const length = parseInt(_length);
+    const id = parseInt(_id);
     const clone = document.createElement("div");
     clone.dataset.id = id;
     clone.dataset.length = length;
@@ -161,6 +259,13 @@ const createGrabShip = (id, _length, direction) => {
     }
 
     return clone;
+};
+
+const removePlacedShip = () => {
+    const cells = document.querySelectorAll(".temporary-cells > div");
+    cells.forEach((cell) => {
+        cell.addEventListener("click", () => {});
+    });
 };
 
 module.exports = drag;
