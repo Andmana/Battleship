@@ -67,8 +67,8 @@ const drag = () => {
             );
             placedShip.classList.add("placed-ship");
             boardCell.appendChild(placedShip);
-            console.log("boardCell", boardCell);
-            console.log("placedShip", placedShip);
+
+            clearHoverEffect();
         } else {
             document.querySelector(".invisible").classList.remove("invisible");
         }
@@ -110,6 +110,11 @@ const drag = () => {
         const row = parseInt(cell.dataset.row);
         const col = parseInt(cell.dataset.col);
 
+        let hoverClass =
+            (direction === "h" ? col : row) + length - 1 < 10
+                ? "place-valid"
+                : "place-invalid";
+
         for (let i = 0; i < length; i++) {
             let targetCell;
             if (direction === "h") {
@@ -127,7 +132,7 @@ const drag = () => {
             }
 
             if (targetCell) {
-                targetCell.classList.add("place-valid");
+                targetCell.classList.add(hoverClass);
                 lastHoveredCells.push(targetCell);
             }
         }
@@ -135,7 +140,7 @@ const drag = () => {
 
     const clearHoverEffect = () => {
         lastHoveredCells.forEach((cell) =>
-            cell.classList.remove("place-valid")
+            cell.classList.remove("place-valid", "place-invalid")
         );
         lastHoveredCells = [];
     };

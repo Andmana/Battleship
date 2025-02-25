@@ -179,7 +179,8 @@ body {
 }
 
 .placed-ship {
-    background-color: green;
+    background-color: skyblue;
+    pointer-events: none;
     position: relative;
     top: 0;
     left: 0;
@@ -235,7 +236,15 @@ body {
 } */
 
 .gameboard-cell.place-valid {
-    background-color: #6aff0094;
+    background-color: lightgreen;
+    opacity: 1;
+    z-index: 2 !important;
+}
+
+.gameboard-cell.place-invalid {
+    background-color: red;
+    opacity: 1;
+    z-index: 2 !important;
 }
 
 .set-up-actions {
