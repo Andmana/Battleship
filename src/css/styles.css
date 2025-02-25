@@ -185,8 +185,8 @@ body {
     top: 0;
     left: 0;
     visibility: visible;
-    opacity: 0.7;
-    z-index: 1;
+    opacity: 1;
+    z-index: 1000;
 }
 
 .invisible {
@@ -240,15 +240,13 @@ body {
 } */
 
 .gameboard-cell.place-valid {
-    background-color: lightgreen;
+    background-color: lightgreen !important;
     opacity: 1;
-    z-index: 2 !important;
 }
 
 .gameboard-cell.place-invalid {
-    background-color: red;
+    background-color: red !important;
     opacity: 1;
-    z-index: 2 !important;
 }
 
 .set-up-actions {

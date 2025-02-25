@@ -120,27 +120,24 @@ const drag = () => {
                 ? "place-valid"
                 : "place-invalid";
 
+        lastHoveredCells = [];
+
         for (let i = 0; i < length; i++) {
-            let targetCell;
-            if (direction === "h") {
-                targetCell = document.querySelector(
-                    `.temporary-board > div[data-row="${row}"][data-col="${
-                        col + i
-                    }"]`
-                );
-            } else {
-                targetCell = document.querySelector(
-                    `.temporary-board > div[data-row="${
-                        row + i
-                    }"][data-col="${col}"]`
-                );
-            }
+            const targetRow = direction === "h" ? row : row + i;
+            const targetCol = direction === "h" ? col + i : col;
+
+            const targetCell = document.querySelector(
+                `.temporary-board > div[data-row="${targetRow}"][data-col="${targetCol}"]`
+            );
 
             if (targetCell) {
-                targetCell.classList.add(hoverClass);
                 lastHoveredCells.push(targetCell);
+                if (targetCell.dataset.adjacent === "true")
+                    hoverClass = "place-invalid";
             }
         }
+
+        lastHoveredCells.forEach((cell) => cell.classList.add(hoverClass));
     };
 
     const clearHoverEffect = () => {

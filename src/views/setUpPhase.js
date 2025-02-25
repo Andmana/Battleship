@@ -104,9 +104,10 @@ const setUpShipsOnBoard = () => {
                 }
 
                 if (targetCell) {
-                    targetCell.classList.add("place-valid");
+                    // targetCell.classList.add("place-valid");
                     lastHoveredCells.push(targetCell);
                 }
+                lastHoveredCells.forEach((cel) => {});
             }
         };
 
