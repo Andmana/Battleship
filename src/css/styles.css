@@ -165,6 +165,7 @@ body {
 
 .unplaced-ships {
     max-width: 420px;
+    position: relative;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
