@@ -178,8 +178,14 @@ body {
     background-color: gray;
 }
 
-.drag-able {
-    cursor: grab;
+.placed-ship {
+    background-color: green;
+    position: relative;
+    top: 0;
+    left: 0;
+    visibility: visible;
+    opacity: 0.7;
+    z-index: 1;
 }
 
 .invisible {
@@ -188,10 +194,21 @@ body {
     pointer-events: none;
 }
 
+.drag-able {
+    cursor: grab;
+}
+
 .dragging {
+    height: 40px;
+    background-color: #ccc;
+    border: 2px dashed black;
     cursor: grabbing;
     position: absolute;
     z-index: -1;
+}
+
+.dragging.vertical {
+    transform: rotate(90deg);
 }
 
 .gameboard {

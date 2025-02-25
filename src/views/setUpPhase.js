@@ -1,3 +1,5 @@
+const drag = require("./drag");
+
 const setUpShipsOnBoard = () => {
     const ships = document.querySelectorAll(".unplaced-ship.drag-able");
     const body = document.querySelector("body");
@@ -123,35 +125,36 @@ const loadSetUpPhase = () => {
     main.innerHTML = `
         <div class="game-guidance">
             Place ships on board <br />
-            Tap or type 'R' to ratate
+            Tap here or type 'R' to ratate
         </div>
         <div class="set-up">
             <div class="unplaced-ships">
                 <div
                     class="unplaced-ship drag-able"
                     style="height: 40px; width: 80px"
-                    data-length="2"
+                    data-length="2" data-id="1"
                     ></div>
                 <div
                     class="unplaced-ship drag-able"
                     style="height: 40px; width: 120px"
-                    data-length="3"
+                    data-length="3" data-id="2"
                     ></div>
                 <div
                     class="unplaced-ship drag-able"
                     style="height: 40px; width: 120px"
-                    data-length="3"
+                    data-length="3" data-id="3"
                     ></div>
                 <div
                     class="unplaced-ship drag-able"
                     style="height: 40px; width: 160px"
-                    data-length="4"
+                    data-length="4" data-id="4"
                     ></div>
                 <div
                     class="unplaced-ship drag-able"
                     style="height: 40px; width: 200px"
-                    data-length="5"
-                    ></div>
+                    data-length="5" data-id="5"
+                    ></div>                    
+
             </div>
             <div class="gameboard temporary-board"></div>
             <div class="set-up-actions">
@@ -173,8 +176,9 @@ const loadSetUpPhase = () => {
         }
         board.innerHTML = boardHtml;
     }
+    drag();
 
-    setUpShipsOnBoard();
+    // setUpShipsOnBoard();
 };
 
 module.exports = loadSetUpPhase;
