@@ -7,7 +7,7 @@ const GameController = () => {
 
     const setUpGame = (playerName) => {
         player.name = playerName;
-        loadSetUpPhase(playerName);
+        loadSetUpPhase();
     };
     loadStartPhase(setUpGame);
 };
