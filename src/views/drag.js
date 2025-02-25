@@ -7,6 +7,8 @@ const drag = () => {
     let isDragging = false;
     let direction = "h";
     let movingShip;
+    let movingShipLength;
+    let lastHoveredCells = [];
 
     ships.forEach((ship) => {
         ship.addEventListener("click", (e) => {
@@ -18,6 +20,7 @@ const drag = () => {
                 ship.dataset.length,
                 direction
             );
+            movingShipLength = parseInt(movingShip.dataset.length);
             movingShip.style.left = `${e.pageX - 20}px`;
             movingShip.style.top = `${e.pageY - 20}px`;
             movingShip.classList.add("dragging");
@@ -31,6 +34,23 @@ const drag = () => {
         if (movingShip) {
             movingShip.style.left = `${e.pageX - 20}px`;
             movingShip.style.top = `${e.pageY - 20}px`;
+
+            if (
+                e.clientX >= boardRect.left &&
+                e.clientX <= boardRect.right &&
+                e.clientY >= boardRect.top &&
+                e.clientY <= boardRect.bottom
+            ) {
+                movingShip.style.visibility = "hidden";
+                const boardCell = document.elementFromPoint(
+                    e.clientX,
+                    e.clientY
+                );
+                if (boardCell) updateHoverEffect(boardCell, movingShipLength);
+            } else {
+                movingShip.style.visibility = "visible";
+                clearHoverEffect();
+            }
         }
     });
 
@@ -42,7 +62,7 @@ const drag = () => {
         if (boardCell && boardCell.classList.contains("gameboard-cell")) {
             const placedShip = createGrabShip(
                 movingShip.dataset.id,
-                movingShip.dataset.length,
+                movingShipLength,
                 direction
             );
             placedShip.classList.add("placed-ship");
@@ -69,7 +89,7 @@ const drag = () => {
         }
 
         if (movingShip) {
-            const length = parseInt(movingShip.dataset.length);
+            const length = movingShipLength;
             if (direction === "v") {
                 movingShip.style.height = `${length * 40 + length - 1}px`;
                 movingShip.style.width = "40px";
@@ -83,6 +103,42 @@ const drag = () => {
     document.querySelector(".game-guidance").addEventListener("click", () => {
         direction = direction === "h" ? "v" : "h";
     });
+
+    const updateHoverEffect = (cell, length) => {
+        clearHoverEffect();
+
+        const row = parseInt(cell.dataset.row);
+        const col = parseInt(cell.dataset.col);
+
+        for (let i = 0; i < length; i++) {
+            let targetCell;
+            if (direction === "h") {
+                targetCell = document.querySelector(
+                    `.temporary-board > div[data-row="${row}"][data-col="${
+                        col + i
+                    }"]`
+                );
+            } else {
+                targetCell = document.querySelector(
+                    `.temporary-board > div[data-row="${
+                        row + i
+                    }"][data-col="${col}"]`
+                );
+            }
+
+            if (targetCell) {
+                targetCell.classList.add("place-valid");
+                lastHoveredCells.push(targetCell);
+            }
+        }
+    };
+
+    const clearHoverEffect = () => {
+        lastHoveredCells.forEach((cell) =>
+            cell.classList.remove("place-valid")
+        );
+        lastHoveredCells = [];
+    };
 };
 
 const createGrabShip = (id, _length, direction) => {
