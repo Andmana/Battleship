@@ -182,12 +182,21 @@ body {
     cursor: grab;
 }
 
+.invisible {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
 .dragging {
     cursor: grabbing;
     position: absolute;
+    z-index: -1;
 }
 
 .gameboard {
+    z-index: 0;
+    opacity: 0.7;
     padding: 1px;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -199,7 +208,17 @@ body {
 .gameboard-cell {
     width: 40px;
     height: 40px;
+    position: relative;
     background-color: white;
+    overflow: visible;
+}
+
+/* .gameboard-cell:hover {
+    background-color: #ccc;
+} */
+
+.gameboard-cell.place-valid {
+    background-color: #6aff0094;
 }
 
 .set-up-actions {
