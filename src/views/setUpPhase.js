@@ -12,8 +12,9 @@ const loadSetUpPhase = () => {
     const main = document.querySelector(".main");
     main.innerHTML = `
         <div class="game-guidance">
-            Place ships on board <br />
-            Tap here or type 'R' to ratate
+            1. Click on the board to place ships. <br />
+            2. Double-click on a ship to remove it from the board. <br />
+            3. Tap here or press 'R' to rotate the ship.
         </div>
         <div class="set-up">
             <div class="unplaced-ships">
