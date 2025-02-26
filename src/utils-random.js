@@ -90,7 +90,4 @@ function generateShips(numShips, gridSize) {
     return shipCoordinates;
 }
 
-const random = generateShips(5, 10);
-console.log("random", random);
-
 module.exports = generateShips;

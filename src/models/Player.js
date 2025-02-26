@@ -5,10 +5,15 @@ const Player = (_type = "Player", _name = null) => {
     let name = _name;
     const type = _type;
 
+    const newBoard = () => {
+        gameboard = Gameboard();
+    };
+
     return {
         gameboard,
         type,
         name,
+        newBoard,
     };
 };
 

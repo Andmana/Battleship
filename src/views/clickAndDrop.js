@@ -188,6 +188,7 @@ const createGrabShip = (_id, _length, direction) => {
     const clone = document.createElement("div");
     clone.dataset.id = id;
     clone.dataset.length = length;
+    clone.dataset.direction = direction;
 
     if (direction === "v") {
         clone.style.height = `${length * 40 + length - 1}px`;
@@ -210,6 +211,8 @@ const placeShipOnBoard = (_startCell, _ship, direction) => {
     const startCell = _startCell;
     const ship = _ship;
     startCell.dataset.isStart = "true";
+    startCell.dataset.length = ship.dataset.length;
+    startCell.dataset.direction = ship.dataset.direction;
     startCell.appendChild(ship);
     ship.classList.add("placed-ship");
 
@@ -263,6 +266,8 @@ const removeCellMark = (id) => {
     cellPlacedShip.forEach((cell) => {
         cell.removeAttribute("data-id");
         cell.removeAttribute("data-is-start");
+        cell.removeAttribute("data-length");
+        cell.removeAttribute("data-direction");
     });
 };
 

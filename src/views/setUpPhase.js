@@ -7,10 +7,101 @@ const {
 } = require("./clickAndDrop");
 const getCellBy = require("./utils");
 
-const loadSetUpPhase = () => {
-    document.querySelector(".header").classList.add("shrink");
-    const main = document.querySelector(".main");
-    main.innerHTML = `
+const loadBoardContainer = () => {
+    let borderNumber = "";
+    for (let i = 0; i < 10; i++) {
+        borderNumber += `<div>${i}</div>`;
+    }
+
+    const boardBorder = document.querySelectorAll(".gameboard-border");
+    boardBorder.forEach((border) => {
+        border.innerHTML = borderNumber;
+    });
+};
+
+const loadEmptyBoard = () => {
+    const board = document.querySelector(".temporary-board");
+    if (board) {
+        let boardHtml = "";
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 10; col++) {
+                boardHtml += `
+                    <div class="gameboard-cell" data-row="${row}" data-col="${col}"></div>
+                `;
+            }
+        }
+        board.innerHTML = boardHtml;
+    }
+
+    removePlacedShipEvents();
+};
+
+const attachButtonEvents = () => {
+    const clearShips = document.querySelector(".clear-ship");
+    if (clearShips) clearShips.addEventListener("click", resetSetUpBoard);
+
+    const placeRandomly = document.querySelector(".place-randomly");
+    if (placeRandomly)
+        placeRandomly.addEventListener("click", setUpBoardRandomly);
+};
+
+const toPlayGamePhase = () => {
+    const playGame = document.querySelector(".play-game");
+    if (playGame) {
+        playGame.addEventListener("click", () => {
+            const placedShips = document.querySelectorAll(".placed-ship");
+            if (placedShips.length === 5) {
+                const startCoords = document.querySelectorAll(
+                    ".temporary-board > div[data-is-start]"
+                );
+                const arrayCoords = [];
+                startCoords.forEach((startCoord) => {
+                    const row = parseInt(startCoord.dataset.row);
+                    const col = parseInt(startCoord.dataset.col);
+                    const length = parseInt(startCoord.dataset.length);
+                    const direction = startCoord.dataset.direction;
+                    arrayCoords.push([length, row, col, direction]);
+                });
+                // (startCoords);
+                console.log("arrayCoords", arrayCoords);
+            }
+        });
+    }
+};
+
+const resetSetUpBoard = () => {
+    loadEmptyBoard();
+    const unplacedShips = document.querySelectorAll(".unplaced-ship");
+    unplacedShips.forEach((unplacedShip) => {
+        unplacedShip.classList.remove("invisible");
+    });
+};
+
+const setUpBoardRandomly = () => {
+    resetSetUpBoard();
+
+    const unplacedShips = document.querySelectorAll(".unplaced-ship");
+    unplacedShips.forEach((unplacedShip) => {
+        unplacedShip.classList.add("invisible");
+    });
+
+    const randomCoords = generateShips(5, 10);
+
+    let id = 1;
+    for (const [len, row, col, dir] of randomCoords) {
+        const cell = getCellBy(".temporary-board", row, col);
+        const ship = createGrabShip(id, len, dir);
+        placeShipOnBoard(cell, ship, dir);
+
+        id += 1;
+    }
+};
+
+const SetUpPhase = () => {
+    const loadContent = () => {
+        document.querySelector(".header").classList.add("shrink");
+        const main = document.querySelector(".main");
+        main.innerHTML = `
         <div class="game-guidance">
             1. Click on the board to place ships. <br />
             2. Double-click on a ship to remove it from the board. <br />
@@ -54,83 +145,42 @@ const loadSetUpPhase = () => {
             <div class="set-up-actions">
                 <button class="clear-ship">Clear ships</button>
                 <button class="place-randomly">Place ships randomly</button>
-                <button>Play Game</button>
+                <button class="play-game">Play Game</button>
             </div>
         </div>`;
 
-    loadBoardContainer();
-    loadEmptyBoard();
-    attachEvents();
+        loadBoardContainer();
+        loadEmptyBoard();
+        attachButtonEvents();
 
-    boardShipEvents();
+        boardShipEvents();
+    };
 
-    // setUpShipsOnBoard();
-};
+    const nextPhaseTrigger = (callback) => {
+        const playGame = document.querySelector(".play-game");
+        if (playGame) {
+            playGame.addEventListener("click", () => {
+                const placedShips = document.querySelectorAll(".placed-ship");
+                if (placedShips.length === 5) {
+                    const startCoords = document.querySelectorAll(
+                        ".temporary-board > div[data-is-start]"
+                    );
+                    const arrayCoords = [];
+                    startCoords.forEach((startCoord) => {
+                        const row = parseInt(startCoord.dataset.row);
+                        const col = parseInt(startCoord.dataset.col);
+                        const length = parseInt(startCoord.dataset.length);
+                        const direction = startCoord.dataset.direction;
+                        arrayCoords.push([length, row, col, direction]);
+                    });
 
-const loadBoardContainer = () => {
-    let borderNumber = "";
-    for (let i = 0; i < 10; i++) {
-        borderNumber += `<div>${i}</div>`;
-    }
-
-    const boardBorder = document.querySelectorAll(".gameboard-border");
-    boardBorder.forEach((border) => {
-        border.innerHTML = borderNumber;
-    });
-};
-
-const loadEmptyBoard = () => {
-    const board = document.querySelector(".temporary-board");
-    if (board) {
-        let boardHtml = "";
-        for (let row = 0; row < 10; row++) {
-            for (let col = 0; col < 10; col++) {
-                boardHtml += `
-                    <div class="gameboard-cell" data-row="${row}" data-col="${col}"></div>
-                `;
-            }
+                    callback(arrayCoords);
+                }
+            });
         }
-        board.innerHTML = boardHtml;
-    }
+    };
 
-    removePlacedShipEvents();
+    return { loadContent, nextPhaseTrigger };
 };
 
-const attachEvents = () => {
-    const clearShips = document.querySelector(".clear-ship");
-    if (clearShips) clearShips.addEventListener("click", resetSetUpBoard);
-
-    const placeRandomly = document.querySelector(".place-randomly");
-    if (placeRandomly)
-        placeRandomly.addEventListener("click", setUpBoardRandomly);
-};
-
-const resetSetUpBoard = () => {
-    loadEmptyBoard();
-    const unplacedShips = document.querySelectorAll(".unplaced-ship");
-    unplacedShips.forEach((unplacedShip) => {
-        unplacedShip.classList.remove("invisible");
-    });
-};
-
-const setUpBoardRandomly = () => {
-    resetSetUpBoard();
-
-    const unplacedShips = document.querySelectorAll(".unplaced-ship");
-    unplacedShips.forEach((unplacedShip) => {
-        unplacedShip.classList.add("invisible");
-    });
-
-    const randomCoords = generateShips(5, 10);
-
-    let id = 1;
-    for (const [len, row, col, dir] of randomCoords) {
-        const cell = getCellBy(".temporary-board", row, col);
-        const ship = createGrabShip(id, len, dir);
-        placeShipOnBoard(cell, ship, dir);
-
-        id += 1;
-    }
-};
-
-module.exports = loadSetUpPhase;
+module.exports = { SetUpPhase };
