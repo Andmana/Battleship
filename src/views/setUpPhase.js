@@ -45,30 +45,6 @@ const attachButtonEvents = () => {
         placeRandomly.addEventListener("click", setUpBoardRandomly);
 };
 
-const toPlayGamePhase = () => {
-    const playGame = document.querySelector(".play-game");
-    if (playGame) {
-        playGame.addEventListener("click", () => {
-            const placedShips = document.querySelectorAll(".placed-ship");
-            if (placedShips.length === 5) {
-                const startCoords = document.querySelectorAll(
-                    ".temporary-board > div[data-is-start]"
-                );
-                const arrayCoords = [];
-                startCoords.forEach((startCoord) => {
-                    const row = parseInt(startCoord.dataset.row);
-                    const col = parseInt(startCoord.dataset.col);
-                    const length = parseInt(startCoord.dataset.length);
-                    const direction = startCoord.dataset.direction;
-                    arrayCoords.push([length, row, col, direction]);
-                });
-                // (startCoords);
-                console.log("arrayCoords", arrayCoords);
-            }
-        });
-    }
-};
-
 const resetSetUpBoard = () => {
     loadEmptyBoard();
     const unplacedShips = document.querySelectorAll(".unplaced-ship");
