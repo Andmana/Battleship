@@ -1,6 +1,6 @@
 const getCellBy = require("./utils");
 
-const drag = () => {
+const boardShipEvents = () => {
     const ships = document.querySelectorAll(".unplaced-ship.drag-able");
     const body = document.querySelector("body");
     const gameboard = document.querySelector(".temporary-board");
@@ -38,10 +38,10 @@ const drag = () => {
             movingShip.style.top = `${e.pageY - 20}px`;
 
             if (
-                e.clientX >= boardRect.left &&
-                e.clientX <= boardRect.right &&
-                e.clientY >= boardRect.top &&
-                e.clientY <= boardRect.bottom
+                e.pageX >= boardRect.left &&
+                e.pageX <= boardRect.right &&
+                e.pageY >= boardRect.top &&
+                e.pageY <= boardRect.bottom
             ) {
                 movingShip.style.visibility = "hidden";
                 const boardCell = document.elementFromPoint(
@@ -297,7 +297,7 @@ const adjacents = [
 ];
 
 module.exports = {
-    drag,
+    boardShipEvents,
     createGrabShip,
     placeShipOnBoard,
     removePlacedShipEvents,

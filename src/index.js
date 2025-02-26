@@ -13,5 +13,4 @@ const controller = GameController();
 //         innerhtml += '<div class="gameboard-cell"></div>';
 //     }
 // }
-
 // board.innerHTML = innerhtml;

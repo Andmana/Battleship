@@ -1,10 +1,10 @@
 const generateShips = require("../utils-random");
 const {
-    drag,
     createGrabShip,
     placeShipOnBoard,
     removePlacedShipEvents,
-} = require("./drag");
+    boardShipEvents,
+} = require("./clickAndDrop");
 const getCellBy = require("./utils");
 
 const loadSetUpPhase = () => {
@@ -44,7 +44,12 @@ const loadSetUpPhase = () => {
                     ></div>                    
 
             </div>
-            <div class="gameboard temporary-board"></div>
+            <div class="gameboard-container">
+                <div class="gameboard-tag">#</div>
+                <div class="gameboard-border border-h"></div>
+                <div class="gameboard-border border-v"></div>
+                <div class="gameboard temporary-board"></div>
+            </div>
             <div class="set-up-actions">
                 <button class="clear-ship">Clear ships</button>
                 <button class="place-randomly">Place ships randomly</button>
@@ -52,12 +57,25 @@ const loadSetUpPhase = () => {
             </div>
         </div>`;
 
+    loadBoardContainer();
     loadEmptyBoard();
     attachEvents();
 
-    drag();
+    boardShipEvents();
 
     // setUpShipsOnBoard();
+};
+
+const loadBoardContainer = () => {
+    let borderNumber = "";
+    for (let i = 0; i < 10; i++) {
+        borderNumber += `<div>${i}</div>`;
+    }
+
+    const boardBorder = document.querySelectorAll(".gameboard-border");
+    boardBorder.forEach((border) => {
+        border.innerHTML = borderNumber;
+    });
 };
 
 const loadEmptyBoard = () => {
