@@ -25,8 +25,11 @@ const GameController = () => {
         computer.gameboard.placeShipBatch(generateShips(5, 10));
 
         playPhase = PlayPhase();
-        playPhase.loadContent(player.name, player.gameboard.shipsMap);
-        playPhase.temp(player.gameboard.ships);
+        playPhase.loadContent(
+            player.name,
+            player.gameboard,
+            computer.gameboard.ships
+        );
     };
 
     const startphase = StartPhase();

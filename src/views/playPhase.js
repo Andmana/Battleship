@@ -1,7 +1,7 @@
 const getCellBy = require("./utils");
 
 const PlayPhase = () => {
-    const loadContent = (playerName, playerBoard) => {
+    const loadContent = (playerName, playerBoard, comShips) => {
         const main = document.querySelector(".main");
         main.innerHTML = `
             <div class="game-guidance">Joe Mama</div>
@@ -34,15 +34,12 @@ const PlayPhase = () => {
 
         loadBoardContainer();
         loadEmptyBoard();
-        loadPlayerShips(playerBoard);
-        loadShipAvatars();
+        loadPlayerShips(playerBoard.shipsMap);
+        loadShipAvatars(playerBoard.ships, "p1-field");
+        loadShipAvatars(comShips, "p2-field");
     };
 
-    const temp = (ships) => {
-        console.log(ships);
-    };
-
-    return { loadContent, temp };
+    return { loadContent };
 };
 
 const loadEmptyBoard = () => {
@@ -69,13 +66,10 @@ const loadPlayerShips = (board) => {
         )
         .filter((position) => position !== null); // Remove null entries
 
-    console.log("shipPositions", shipPositions);
-    console.log("board", board);
-
     for (const { row, col, ship } of shipPositions) {
         let cell = getCellBy(".p1-board", row, col);
         if (cell) {
-            cell.dataset.id = ship; // Set the ship id on the cell
+            cell.dataset.id = ship.id; // Set the ship id on the cell
         }
 
         for (const [dr, dc] of adjacentOffsets) {
@@ -102,22 +96,23 @@ const loadBoardContainer = () => {
     });
 };
 
-const loadShipAvatars = () => {
-    console.log("aaa");
-    const lengths = [2, 3, 3, 4, 5];
+const loadShipAvatars = (_ships, query) => {
+    const ships = _ships;
+    ships.sort((a, b) => a.length - b.length);
+    console.log("ships", ships);
     let avatarsHTML = "";
-    for (let i = 0; i < 5; i++) {
+    ships.forEach((ship) => {
         let avatarShip = "";
-        for (let num = 0; num < lengths[i]; num++) {
+        for (let i = 0; i < ship.length; i++) {
             avatarShip += `<div class="avatar-box"></div>`;
         }
-        avatarsHTML += `<div data-id="${i + 1}">${avatarShip}</div>`;
-    }
-
-    const shipAvatars = document.querySelectorAll(".ship-avatars");
-    shipAvatars.forEach((shipAvatar) => {
-        shipAvatar.innerHTML = avatarsHTML;
+        avatarsHTML += `<div data-id="${ship.id}">${avatarShip}</div>`;
     });
+
+    const shipAvatars = document.querySelector(`.${query} > .ship-avatars`);
+    console.log("shipAvatars", shipAvatars);
+    console.log(`.${query} > .ship-avatars`);
+    if (shipAvatars) shipAvatars.innerHTML = avatarsHTML;
 };
 
 const adjacentOffsets = [

@@ -36,7 +36,7 @@ describe("Test Gameboard", () => {
         // ship 2
         gameboard.placeShip(3, 2, 5, "v");
         expect(gameboard.allSunken()).toBe(false);
-        gameboard.removeShip({ id: 2 });
+        gameboard.removeShip({ id: 3 });
         expect(gameboard.allSunken()).toBe(true);
     });
 });
