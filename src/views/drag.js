@@ -91,7 +91,7 @@ const drag = () => {
         });
     });
 
-    //rotate
+    //rotates
     // Rotate by type
     document.addEventListener("keydown", function (event) {
         if (event.key === "r" || event.key === "R") {
@@ -109,7 +109,7 @@ const drag = () => {
             }
         }
     });
-    // by click
+    // rotate by click
     document.querySelector(".game-guidance").addEventListener("click", () => {
         direction = direction === "h" ? "v" : "h";
     });
@@ -161,16 +161,6 @@ const drag = () => {
             return false;
         }
 
-        const adjacents = [
-            [-1, -1],
-            [-1, 0],
-            [-1, 1], // Atas
-            [0, -1],
-            [0, 1], // Kiri & Kanan
-            [1, -1],
-            [1, 0],
-            [1, 1], // Bawah
-        ];
         let targetCell;
         for (let i = 0; i < movingShipLength; i++) {
             const targetRow = direction === "h" ? row : row + i;
@@ -257,16 +247,6 @@ const placeShipOnBoard = (_startCell, ship, direction) => {
     const row = parseInt(startCell.dataset.row);
     const col = parseInt(startCell.dataset.col);
 
-    const adjacents = [
-        [-1, -1],
-        [-1, 0],
-        [-1, 1], // Atas
-        [0, -1],
-        [0, 1], // Kiri & Kanan
-        [1, -1],
-        [1, 0],
-        [1, 1], // Bawah
-    ];
     let targetCell;
     for (let i = 0; i < ship.dataset.length; i++) {
         const targetRow = direction === "h" ? row : row + i;
@@ -301,17 +281,6 @@ const removeCellMark = (id) => {
 };
 
 const updateAdjacent = () => {
-    const adjacents = [
-        [-1, -1],
-        [-1, 0],
-        [-1, 1], // Atas
-        [0, -1],
-        [0, 1], // Kiri & Kanan
-        [1, -1],
-        [1, 0],
-        [1, 1], // Bawah
-    ];
-
     const cells = document.querySelectorAll(`.temporary-board > div`);
     cells.forEach((cell) => {
         const row = parseInt(cell.dataset.row, 10);
@@ -329,5 +298,16 @@ const updateAdjacent = () => {
         cell.dataset.adjacent = isAdjacent.toString();
     });
 };
+
+const adjacents = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1], // Atas
+    [0, -1],
+    [0, 1], // Kiri & Kanan
+    [1, -1],
+    [1, 0],
+    [1, 1], // Bawah
+];
 
 module.exports = drag;
