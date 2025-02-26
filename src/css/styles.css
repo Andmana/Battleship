@@ -192,7 +192,6 @@ body {
 .invisible {
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
 }
 
 .drag-able {

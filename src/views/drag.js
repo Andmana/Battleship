@@ -14,6 +14,7 @@ const drag = () => {
 
     ships.forEach((ship) => {
         ship.addEventListener("click", (e) => {
+            console.log("clcik");
             isDragging = true;
             ship.classList.add("invisible");
 
@@ -32,6 +33,8 @@ const drag = () => {
     });
 
     document.addEventListener("mousemove", (e) => {
+        console.log("move");
+
         if (!isDragging) return;
         if (movingShip) {
             movingShip.style.left = `${e.pageX - 20}px`;
@@ -57,7 +60,9 @@ const drag = () => {
     });
 
     document.addEventListener("mouseup", (e) => {
+        console.log("unclick");
         if (!isDragging) return;
+
         isDragging = false;
 
         const boardCell = document.elementFromPoint(e.clientX, e.clientY);
@@ -69,13 +74,13 @@ const drag = () => {
             );
             placedShip.classList.add("placed-ship");
             if (isValidCells(boardCell))
-                placeShipOnBoard(boardCell, placedShip);
+                placeShipOnBoard(boardCell, placedShip, direction);
             else {
-                shipRemoveInvisible(movingShip.dataset.id);
+                showInvisibleShip(movingShip.dataset.id);
             }
             clearHoverEffect();
         } else {
-            shipRemoveInvisible(movingShip.dataset.id);
+            showInvisibleShip(movingShip.dataset.id);
         }
 
         const draggings = document.querySelectorAll(".dragging");
@@ -174,7 +179,7 @@ const drag = () => {
             targetCell = getCellBy(".temporary-board", targetRow, targetCol);
             if (
                 targetCell &&
-                (targetCell.dataset.adjacent || targetCell.dataset.id)
+                (targetCell.dataset.adjacent == "true" || targetCell.dataset.id)
             ) {
                 console.log("2");
 
@@ -196,48 +201,28 @@ const drag = () => {
         return true;
     };
 
-    const placeShipOnBoard = (_startCell, ship) => {
-        const startCell = _startCell;
-        startCell.dataset.isStart = "true";
-        startCell.appendChild(ship);
+    const removePlacedShip = () => {
+        const cells = document.querySelectorAll(".temporary-board > div");
+        cells.forEach((cell) => {
+            // better event trigger
+            cell.addEventListener("dblclick", () => {
+                console.log("remove ship");
+                const placedShip = document.querySelector(
+                    `.placed-ship[data-id="${cell.dataset.id}"]`
+                );
 
-        const row = parseInt(startCell.dataset.row);
-        const col = parseInt(startCell.dataset.col);
+                if (placedShip && !isDragging) {
+                    placedShip.remove();
+                    showInvisibleShip(cell.dataset.id);
 
-        const adjacents = [
-            [-1, -1],
-            [-1, 0],
-            [-1, 1], // Atas
-            [0, -1],
-            [0, 1], // Kiri & Kanan
-            [1, -1],
-            [1, 0],
-            [1, 1], // Bawah
-        ];
-        let targetCell;
-        for (let i = 0; i < ship.dataset.length; i++) {
-            const targetRow = direction === "h" ? row : row + i;
-            const targetCol = direction === "h" ? col + i : col;
-
-            targetCell = getCellBy(".temporary-board", targetRow, targetCol);
-            if (targetCell) {
-                targetCell.dataset.id = ship.dataset.id;
-            }
-
-            for (const [dr, dc] of adjacents) {
-                const r = targetRow + dr,
-                    c = targetCol + dc;
-                targetCell = getCellBy(".temporary-board", r, c);
-                if (targetCell) targetCell.dataset.adjacent = "true";
-            }
-        }
+                    removeCellMark(cell.dataset.id);
+                    updateAdjacent();
+                }
+            });
+        });
     };
 
-    const shipRemoveInvisible = (id) => {
-        document
-            .querySelector(`.unplaced-ship[data-id="${id}"]`)
-            .classList.remove("invisible");
-    };
+    removePlacedShip();
 };
 
 const createGrabShip = (_id, _length, direction) => {
@@ -258,10 +243,90 @@ const createGrabShip = (_id, _length, direction) => {
     return clone;
 };
 
-const removePlacedShip = () => {
-    const cells = document.querySelectorAll(".temporary-cells > div");
+const showInvisibleShip = (id) => {
+    document
+        .querySelector(`.unplaced-ship[data-id="${id}"]`)
+        .classList.remove("invisible");
+};
+
+const placeShipOnBoard = (_startCell, ship, direction) => {
+    const startCell = _startCell;
+    startCell.dataset.isStart = "true";
+    startCell.appendChild(ship);
+
+    const row = parseInt(startCell.dataset.row);
+    const col = parseInt(startCell.dataset.col);
+
+    const adjacents = [
+        [-1, -1],
+        [-1, 0],
+        [-1, 1], // Atas
+        [0, -1],
+        [0, 1], // Kiri & Kanan
+        [1, -1],
+        [1, 0],
+        [1, 1], // Bawah
+    ];
+    let targetCell;
+    for (let i = 0; i < ship.dataset.length; i++) {
+        const targetRow = direction === "h" ? row : row + i;
+        const targetCol = direction === "h" ? col + i : col;
+
+        targetCell = getCellBy(".temporary-board", targetRow, targetCol);
+        if (targetCell) {
+            targetCell.dataset.id = ship.dataset.id;
+        }
+
+        for (const [dr, dc] of adjacents) {
+            const r = targetRow + dr,
+                c = targetCol + dc;
+            targetCell = getCellBy(".temporary-board", r, c);
+            if (targetCell) targetCell.dataset.adjacent = "true";
+        }
+    }
+};
+
+const removeCellMark = (id) => {
+    console.log("remove id", id);
+    const cellPlacedShip = document.querySelectorAll(
+        `.temporary-board >div[data-id="${id}"]`
+    );
+    console.log("cellPlacedShip", cellPlacedShip);
+
+    cellPlacedShip.forEach((cell) => {
+        console.log(cell.dataset.row, cell.dataset.col);
+        cell.removeAttribute("data-id");
+        cell.removeAttribute("data-is-start");
+    });
+};
+
+const updateAdjacent = () => {
+    const adjacents = [
+        [-1, -1],
+        [-1, 0],
+        [-1, 1], // Atas
+        [0, -1],
+        [0, 1], // Kiri & Kanan
+        [1, -1],
+        [1, 0],
+        [1, 1], // Bawah
+    ];
+
+    const cells = document.querySelectorAll(`.temporary-board > div`);
     cells.forEach((cell) => {
-        cell.addEventListener("click", () => {});
+        const row = parseInt(cell.dataset.row, 10);
+        const col = parseInt(cell.dataset.col, 10);
+
+        let isAdjacent = false;
+        for (const [r, c] of adjacents) {
+            const adCell = getCellBy(".temporary-board", row + r, col + c);
+            if (adCell && adCell.dataset.id) {
+                isAdjacent = true;
+                break;
+            }
+        }
+
+        cell.dataset.adjacent = isAdjacent.toString();
     });
 };
 
