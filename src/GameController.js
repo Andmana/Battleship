@@ -2,9 +2,11 @@ const StartPhase = require("./views/startPhase");
 const Player = require("./models/Player");
 const { SetUpPhase } = require("./views/setUpPhase");
 const generateShips = require("./utils-random");
+const PlayPhase = require("./views/playPhase");
 const GameController = () => {
     const player = Player();
     const computer = Player("computer");
+    computer.name = "Comp";
     let setUpPhase;
     let playPhase;
 
@@ -20,7 +22,11 @@ const GameController = () => {
         player.gameboard.placeShipBatch(playerShipsCoord);
 
         computer.newBoard();
-        computer.gameboard.placeShipBatch(generateShips(5, this.length));
+        computer.gameboard.placeShipBatch(generateShips(5, 10));
+
+        playPhase = PlayPhase();
+        playPhase.loadContent(player.name, player.gameboard.shipsMap);
+        playPhase.temp(player.gameboard.ships);
     };
 
     const startphase = StartPhase();

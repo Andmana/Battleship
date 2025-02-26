@@ -285,6 +285,10 @@ body {
     background-color: #ccc;
 }
 
+.gameboard-cell[data-id] {
+    background-color: skyblue;
+}
+
 .gameboard-cell.place-valid {
     background-color: lightgreen !important;
     opacity: 1;

@@ -1,5 +1,6 @@
 const StartPhase = () => {
     const loadContent = () => {
+        document.querySelector(".header").className = "header";
         const main = document.querySelector(".main");
         main.innerHTML = `
             <div class="choose-opponents">

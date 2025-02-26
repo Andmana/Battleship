@@ -22,8 +22,8 @@ const Gameboard = (_dimension = 10) => {
 
     const addShip = (length) => {
         const newShip = Ship(length);
-        const newId = ships.push(newShip);
-        newShip.id = newShip - 1;
+        let len = ships.push(newShip);
+        newShip.id = parseInt(len);
         return newShip;
     };
 
