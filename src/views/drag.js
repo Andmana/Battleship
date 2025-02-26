@@ -14,7 +14,6 @@ const drag = () => {
 
     ships.forEach((ship) => {
         ship.addEventListener("click", (e) => {
-            console.log("clcik");
             isDragging = true;
             ship.classList.add("invisible");
 
@@ -33,8 +32,6 @@ const drag = () => {
     });
 
     document.addEventListener("mousemove", (e) => {
-        console.log("move");
-
         if (!isDragging) return;
         if (movingShip) {
             movingShip.style.left = `${e.pageX - 20}px`;
@@ -60,7 +57,6 @@ const drag = () => {
     });
 
     document.addEventListener("mouseup", (e) => {
-        console.log("unclick");
         if (!isDragging) return;
 
         isDragging = false;
@@ -156,7 +152,6 @@ const drag = () => {
         const col = parseInt(cell.dataset.col);
 
         if ((direction === "h" ? col : row) + movingShipLength - 1 >= 10) {
-            console.log("1");
             return false;
         }
 
@@ -170,8 +165,6 @@ const drag = () => {
                 targetCell &&
                 (targetCell.dataset.adjacent == "true" || targetCell.dataset.id)
             ) {
-                console.log("2");
-
                 return false;
             }
 
@@ -180,8 +173,6 @@ const drag = () => {
                     c = targetCol + dc;
                 targetCell = getCellBy(".temporary-board", r, c);
                 if (targetCell && targetCell.dataset.id) {
-                    console.log("3 ", r, c);
-
                     return false;
                 }
             }
@@ -189,29 +180,6 @@ const drag = () => {
 
         return true;
     };
-
-    const removePlacedShip = () => {
-        const cells = document.querySelectorAll(".temporary-board > div");
-        cells.forEach((cell) => {
-            // better event trigger
-            cell.addEventListener("dblclick", () => {
-                console.log("remove ship");
-                const placedShip = document.querySelector(
-                    `.placed-ship[data-id="${cell.dataset.id}"]`
-                );
-
-                if (placedShip && !isDragging) {
-                    placedShip.remove();
-                    showInvisibleShip(cell.dataset.id);
-
-                    removeCellMark(cell.dataset.id);
-                    updateAdjacent();
-                }
-            });
-        });
-    };
-
-    removePlacedShip();
 };
 
 const createGrabShip = (_id, _length, direction) => {
@@ -267,21 +235,38 @@ const placeShipOnBoard = (_startCell, _ship, direction) => {
     }
 };
 
+const removePlacedShipEvents = () => {
+    const cells = document.querySelectorAll(".temporary-board > div");
+    cells.forEach((cell) => {
+        // better event trigger
+        cell.addEventListener("dblclick", () => {
+            const placedShip = document.querySelector(
+                `.placed-ship[data-id="${cell.dataset.id}"]`
+            );
+
+            if (placedShip) {
+                placedShip.remove();
+                showInvisibleShip(cell.dataset.id);
+
+                removeCellMark(cell.dataset.id);
+                updateAdjacentMark();
+            }
+        });
+    });
+};
+
 const removeCellMark = (id) => {
-    console.log("remove id", id);
     const cellPlacedShip = document.querySelectorAll(
         `.temporary-board >div[data-id="${id}"]`
     );
-    console.log("cellPlacedShip", cellPlacedShip);
 
     cellPlacedShip.forEach((cell) => {
-        console.log(cell.dataset.row, cell.dataset.col);
         cell.removeAttribute("data-id");
         cell.removeAttribute("data-is-start");
     });
 };
 
-const updateAdjacent = () => {
+const updateAdjacentMark = () => {
     const cells = document.querySelectorAll(`.temporary-board > div`);
     cells.forEach((cell) => {
         const row = parseInt(cell.dataset.row, 10);
@@ -311,4 +296,9 @@ const adjacents = [
     [1, 1], // Bawah
 ];
 
-module.exports = { drag, createGrabShip, placeShipOnBoard };
+module.exports = {
+    drag,
+    createGrabShip,
+    placeShipOnBoard,
+    removePlacedShipEvents,
+};
