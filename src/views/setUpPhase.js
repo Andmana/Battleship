@@ -1,4 +1,6 @@
-const drag = require("./drag");
+const generateShips = require("../utils-random");
+const { drag, createGrabShip, placeShipOnBoard } = require("./drag");
+const getCellBy = require("./utils");
 
 const setUpShipsOnBoard = () => {
     const ships = document.querySelectorAll(".unplaced-ship.drag-able");
@@ -159,12 +161,21 @@ const loadSetUpPhase = () => {
             </div>
             <div class="gameboard temporary-board"></div>
             <div class="set-up-actions">
-                <button>Clear ships</button>
-                <button>Place ships randomly</button>
+                <button class="clear-ship">Clear ships</button>
+                <button class="place-randomly">Place ships randomly</button>
                 <button>Play Game</button>
             </div>
         </div>`;
 
+    loadEmptyBoard();
+    attachEvents();
+
+    drag();
+
+    // setUpShipsOnBoard();
+};
+
+const loadEmptyBoard = () => {
     const board = document.querySelector(".temporary-board");
     if (board) {
         let boardHtml = "";
@@ -177,9 +188,43 @@ const loadSetUpPhase = () => {
         }
         board.innerHTML = boardHtml;
     }
-    drag();
+};
 
-    // setUpShipsOnBoard();
+const attachEvents = () => {
+    const clearShips = document.querySelector(".clear-ship");
+    if (clearShips) clearShips.addEventListener("click", resetSetUpBoard);
+
+    const placeRandomly = document.querySelector(".place-randomly");
+    if (placeRandomly) {
+        placeRandomly.addEventListener("click", () => {
+            resetSetUpBoard();
+
+            const unplacedShips = document.querySelectorAll(".unplaced-ship");
+            unplacedShips.forEach((unplacedShip) => {
+                unplacedShip.classList.add("invisible");
+            });
+
+            const randomCoords = generateShips(5, 10);
+            console.log("randomCoords", randomCoords);
+
+            let id = 1;
+            for (const [len, row, col, dir] of randomCoords) {
+                const cell = getCellBy(".temporary-board", row, col);
+                const ship = createGrabShip(id, len, dir);
+                placeShipOnBoard(cell, ship, dir);
+
+                id += 1;
+            }
+        });
+    }
+};
+
+const resetSetUpBoard = () => {
+    loadEmptyBoard();
+    const unplacedShips = document.querySelectorAll(".unplaced-ship");
+    unplacedShips.forEach((unplacedShip) => {
+        unplacedShip.classList.remove("invisible");
+    });
 };
 
 module.exports = loadSetUpPhase;

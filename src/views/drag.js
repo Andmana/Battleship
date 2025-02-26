@@ -72,7 +72,6 @@ const drag = () => {
                 movingShipLength,
                 direction
             );
-            placedShip.classList.add("placed-ship");
             if (isValidCells(boardCell))
                 placeShipOnBoard(boardCell, placedShip, direction);
             else {
@@ -239,10 +238,12 @@ const showInvisibleShip = (id) => {
         .classList.remove("invisible");
 };
 
-const placeShipOnBoard = (_startCell, ship, direction) => {
+const placeShipOnBoard = (_startCell, _ship, direction) => {
     const startCell = _startCell;
+    const ship = _ship;
     startCell.dataset.isStart = "true";
     startCell.appendChild(ship);
+    ship.classList.add("placed-ship");
 
     const row = parseInt(startCell.dataset.row);
     const col = parseInt(startCell.dataset.col);
@@ -310,4 +311,4 @@ const adjacents = [
     [1, 1], // Bawah
 ];
 
-module.exports = drag;
+module.exports = { drag, createGrabShip, placeShipOnBoard };
