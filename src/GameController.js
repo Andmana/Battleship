@@ -1,12 +1,11 @@
 const StartPhase = require("./views/startPhase");
 const Player = require("./models/Player");
 const { SetUpPhase } = require("./views/setUpPhase");
-const generateShips = require("./utils-random");
 const PlayPhase = require("./views/playPhase");
+const { getRandomCoords } = require("./random-coords");
 const GameController = () => {
-    let player = Player();
-    let computer = Player("computer");
-    computer.name = "Comp";
+    let player;
+    let computer;
     let setUpPhase;
     let playPhase;
     let isGameOver = false;
@@ -70,6 +69,7 @@ const GameController = () => {
 
     const toSetUpPhase = (playerName) => {
         player.name = playerName;
+        computer.name = "Computer";
         setUpPhase = SetUpPhase();
         setUpPhase.loadContent();
         setUpPhase.nextPhaseTrigger(toPlayPhase);
@@ -77,7 +77,7 @@ const GameController = () => {
 
     const toPlayPhase = (playerShipsCoord) => {
         player.gameboard.placeShipBatch(playerShipsCoord);
-        computer.gameboard.placeShipBatch(generateShips(5, 10));
+        computer.gameboard.placeShipBatch(getRandomCoords());
 
         playPhase = PlayPhase();
         playPhase.loadContent(

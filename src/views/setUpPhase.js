@@ -1,4 +1,3 @@
-const generateShips = require("../utils-random");
 const {
     createGrabShip,
     placeShipOnBoard,
@@ -6,6 +5,7 @@ const {
     boardShipEvents,
 } = require("./clickAndDrop");
 const getCellBy = require("./utils");
+const { getRandomCoords } = require("../random-coords");
 
 const loadBoardContainer = () => {
     let borderNumber = "";
@@ -61,7 +61,7 @@ const setUpBoardRandomly = () => {
         unplacedShip.classList.add("invisible");
     });
 
-    const randomCoords = generateShips(5, 10);
+    const randomCoords = getRandomCoords();
 
     let id = 1;
     for (const [len, row, col, dir] of randomCoords) {
