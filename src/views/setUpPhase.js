@@ -74,6 +74,7 @@ const setUpBoardRandomly = () => {
 };
 
 const SetUpPhase = () => {
+    let shipEvents;
     const loadContent = () => {
         document.querySelector(".header").classList.add("shrink");
         const main = document.querySelector(".main");
@@ -129,7 +130,7 @@ const SetUpPhase = () => {
         loadEmptyBoard();
         attachButtonEvents();
 
-        boardShipEvents();
+        shipEvents = boardShipEvents();
     };
 
     const nextPhaseTrigger = (callback) => {
@@ -149,6 +150,8 @@ const SetUpPhase = () => {
                         const direction = startCoord.dataset.direction;
                         arrayCoords.push([length, row, col, direction]);
                     });
+
+                    shipEvents.removeDocumentEvent();
 
                     callback(arrayCoords);
                 }

@@ -408,26 +408,21 @@ body {
     cursor: pointer;
 }
 
-.gameboard-cell {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.p2-board .gameboard-cell:hover::after {
-    display: block; /* Show the ::after text when hovered */
-}
-
 .gameboard-cell::after {
-    content: "✖";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+
+    content: "✖";
+    text-align: center;
+    padding: auto;
     display: none;
+}
+
+.p2-board .gameboard-cell:hover::after {
+    display: block; /* Show the ::after text when hovered */
 }
 
 .attack-hit {

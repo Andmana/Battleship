@@ -31,7 +31,7 @@ const boardShipEvents = () => {
         });
     });
 
-    document.addEventListener("mousemove", (e) => {
+    function mouseMove(e) {
         if (!isDragging) return;
         if (movingShip) {
             movingShip.style.left = `${e.pageX - 20}px`;
@@ -54,9 +54,10 @@ const boardShipEvents = () => {
                 clearHoverEffect();
             }
         }
-    });
+    }
+    document.addEventListener("mousemove", mouseMove);
 
-    document.addEventListener("mouseup", (e) => {
+    function mouseUp(e) {
         if (!isDragging) return;
 
         isDragging = false;
@@ -84,12 +85,14 @@ const boardShipEvents = () => {
                 body.removeChild(dragging);
             }
         });
-    });
+    }
+
+    document.addEventListener("mouseup", mouseUp);
 
     //rotates
     // Rotate by type
-    document.addEventListener("keydown", function (event) {
-        if (event.key === "r" || event.key === "R") {
+    function rotateR(e) {
+        if (e.key === "r" || e.key === "R") {
             direction = direction === "h" ? "v" : "h";
         }
 
@@ -103,7 +106,8 @@ const boardShipEvents = () => {
                 movingShip.style.height = "40px";
             }
         }
-    });
+    }
+    document.addEventListener("keydown", rotateR);
     // rotate by click
     document.querySelector(".game-guidance").addEventListener("click", () => {
         direction = direction === "h" ? "v" : "h";
@@ -180,6 +184,14 @@ const boardShipEvents = () => {
 
         return true;
     };
+
+    const removeDocumentEvent = () => {
+        document.removeEventListener("keydown", rotateR);
+        document.removeEventListener("mouseup", mouseUp);
+        document.removeEventListener("mousemove", mouseMove);
+    };
+
+    return { removeDocumentEvent };
 };
 
 const createGrabShip = (_id, _length, direction) => {
