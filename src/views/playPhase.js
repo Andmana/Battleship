@@ -39,7 +39,58 @@ const PlayPhase = () => {
         loadShipAvatars(comShips, "p2-field");
     };
 
-    return { loadContent };
+    const attachComBoardEvents = (callback) => {
+        console.log("Hey");
+
+        const coords = document.querySelectorAll(".p2-board > div");
+        coords.forEach((coord) => {
+            coord.addEventListener("click", callback);
+        });
+    };
+
+    const setPlayerCellClass = (row, col, isHit) => {
+        const attackedDiv = getCellBy(".p1-board", row, col);
+        if (isHit) attackedDiv.classList.add("attack-hit");
+        else attackedDiv.classList.add("attack-miss");
+    };
+
+    const setComCellClass = (element, isHit) => {
+        if (isHit) element.classList.add("attack-hit");
+        else element.classList.add("attack-miss");
+    };
+
+    const enableComBoardEvent = () => {
+        const board = document.querySelector(".p2-board.gameboard");
+        board.style.pointerEvents = "auto";
+        board.classList.remove("disabled");
+    };
+
+    const disableComBoardEvent = () => {
+        const board = document.querySelector(".p2-board.gameboard");
+        board.style.pointerEvents = "none";
+        board.classList.add("disabled");
+    };
+
+    const updateShipStatus = (ships, playerType) => {
+        ships.forEach((ship) => {
+            if (ship.isSunk()) {
+                const shipAvatar = document.querySelector(
+                    `.${playerType}-field .ship-avatars > div[data-id="${ship.id}"]`
+                );
+                shipAvatar.classList.add(`sunken-ship`);
+            }
+        });
+    };
+
+    return {
+        loadContent,
+        attachComBoardEvents,
+        setComCellClass,
+        setPlayerCellClass,
+        disableComBoardEvent,
+        enableComBoardEvent,
+        updateShipStatus,
+    };
 };
 
 const loadEmptyBoard = () => {
@@ -99,7 +150,6 @@ const loadBoardContainer = () => {
 const loadShipAvatars = (_ships, query) => {
     const ships = _ships;
     ships.sort((a, b) => a.length - b.length);
-    console.log("ships", ships);
     let avatarsHTML = "";
     ships.forEach((ship) => {
         let avatarShip = "";
@@ -110,8 +160,6 @@ const loadShipAvatars = (_ships, query) => {
     });
 
     const shipAvatars = document.querySelector(`.${query} > .ship-avatars`);
-    console.log("shipAvatars", shipAvatars);
-    console.log(`.${query} > .ship-avatars`);
     if (shipAvatars) shipAvatars.innerHTML = avatarsHTML;
 };
 

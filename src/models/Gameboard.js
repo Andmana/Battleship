@@ -79,7 +79,7 @@ const Gameboard = (_dimension = 10) => {
     };
 
     const retrieveAvailableAttackCord = () => {
-        return attackedCoords
+        return attacksMap
             .flatMap((rowArr, row) =>
                 rowArr.map((attacked, col) => (!attacked ? [row, col] : null))
             )
