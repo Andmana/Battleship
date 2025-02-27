@@ -456,25 +456,47 @@ body {
     align-items: center;
 }
 
+.footer-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
 .footer-image {
     width: 30px;
     height: 30px;
     margin-right: 5px;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 0.4s ease-out 0.1s, transform 0.5s linear;
 }
 
-.footer a {
-    display: flex;
-    align-items: center;
+.footer-image img {
+    transition: transform 0.6s ease-out;
 }
 
-.footer a div {
+.footer-text {
     color: black;
     font-weight: 600;
     transform: scaleY(1.8);
+    transition: all 0.4s linear;
 }
 
 @media (min-width: 1281px) {
     /* CSS */
+}
+
+.footer-link:hover .footer-text {
+    letter-spacing: 1.5ch;
+}
+
+.footer-link:hover .footer-image {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.footer-link:hover .footer-image img {
+    transform: rotate(-720deg);
 }
 
 /* 
