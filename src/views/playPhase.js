@@ -40,8 +40,6 @@ const PlayPhase = () => {
     };
 
     const attachComBoardEvents = (callback) => {
-        console.log("Hey");
-
         const coords = document.querySelectorAll(".p2-board > div");
         coords.forEach((coord) => {
             coord.addEventListener("click", callback);
