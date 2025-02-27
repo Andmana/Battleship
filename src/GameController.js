@@ -4,8 +4,8 @@ const { SetUpPhase } = require("./views/setUpPhase");
 const generateShips = require("./utils-random");
 const PlayPhase = require("./views/playPhase");
 const GameController = () => {
-    const player = Player();
-    const computer = Player("computer");
+    let player = Player();
+    let computer = Player("computer");
     computer.name = "Comp";
     let setUpPhase;
     let playPhase;
@@ -18,6 +18,7 @@ const GameController = () => {
         const col = parseInt(cell.dataset.col);
 
         playPhase.disableComBoardEvent();
+        playPhase.setUpGameGuidance("Computer's turn");
 
         const isHit = computer.gameboard.receiveAttack(row, col);
         playPhase.setComCellClass(cell, isHit);
@@ -34,6 +35,7 @@ const GameController = () => {
         } else {
             playPhase.enableComBoardEvent();
             playPhase.updateShipStatus(computer.gameboard.ships, "p2");
+            playPhase.setUpGameGuidance(player.name + "'s turn");
         }
     };
 
@@ -60,6 +62,8 @@ const GameController = () => {
             setTimeout(computerMove, 500);
         } else {
             playPhase.enableComBoardEvent();
+            playPhase.setUpGameGuidance(player.name + "'s turn");
+
             playPhase.updateShipStatus(player.gameboard.ships, "p1");
         }
     }
@@ -72,10 +76,7 @@ const GameController = () => {
     };
 
     const toPlayPhase = (playerShipsCoord) => {
-        player.newBoard();
         player.gameboard.placeShipBatch(playerShipsCoord);
-
-        computer.newBoard();
         computer.gameboard.placeShipBatch(generateShips(5, 10));
 
         playPhase = PlayPhase();
@@ -86,11 +87,18 @@ const GameController = () => {
         );
 
         playPhase.attachComBoardEvents(handlePlayerMove);
+        playPhase.attachExitEvent(startPhase);
     };
 
-    const startphase = StartPhase();
-    startphase.loadContent();
-    startphase.nextPhaseTrigger(toSetUpPhase);
+    const startPhase = () => {
+        player = Player();
+        computer = Player("computer");
+        const startphase = StartPhase();
+        startphase.loadContent();
+        startphase.nextPhaseTrigger(toSetUpPhase);
+    };
+
+    startPhase();
 };
 
 module.exports = GameController;

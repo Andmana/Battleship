@@ -4,7 +4,7 @@ const PlayPhase = () => {
     const loadContent = (playerName, playerBoard, comShips) => {
         const main = document.querySelector(".main");
         main.innerHTML = `
-            <div class="game-guidance">Joe Mama</div>
+            <div class="game-guidance" style="pointer-events: none;">Joe Mama</div>
             <div class="gameboards">
                 <div class="field p1-field">
                     <div class="players-name">${playerName}'s board</div>
@@ -82,6 +82,14 @@ const PlayPhase = () => {
         });
     };
 
+    const setUpGameGuidance = (text) => {
+        document.querySelector(".game-guidance").textContent = text;
+    };
+
+    const attachExitEvent = (callback) => {
+        document.querySelector(".exit").addEventListener("click", callback);
+    };
+
     return {
         loadContent,
         attachComBoardEvents,
@@ -90,6 +98,8 @@ const PlayPhase = () => {
         disableComBoardEvent,
         enableComBoardEvent,
         updateShipStatus,
+        setUpGameGuidance,
+        attachExitEvent,
     };
 };
 

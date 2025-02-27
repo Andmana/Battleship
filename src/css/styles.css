@@ -145,6 +145,7 @@ body {
 .game-guidance {
     padding: 1em;
     cursor: pointer;
+    min-width: 200px;
 
     text-align: start;
     font-size: 1em;
