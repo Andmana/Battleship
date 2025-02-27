@@ -24,8 +24,7 @@ const GameController = () => {
 
         if (computer.gameboard.allSunken()) {
             isGameOver = true;
-            // playPhase.displayGameOverMessage(true);
-            alert("Game Over");
+            playPhase.displayGameOverMessage(true);
             return;
         }
 
@@ -52,8 +51,7 @@ const GameController = () => {
 
         if (player.gameboard.allSunken()) {
             isGameOver = true;
-            // displayGameOverMessage(false);
-            alert("game over");
+            displayGameOverMessage(false);
             return;
         }
 
@@ -99,6 +97,8 @@ const GameController = () => {
     };
 
     startPhase();
+
+    return { startPhase };
 };
 
 module.exports = GameController;

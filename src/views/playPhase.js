@@ -88,6 +88,18 @@ const PlayPhase = () => {
         document.querySelector(".exit").addEventListener("click", callback);
     };
 
+    const displayGameOverMessage = (isPlayerWin) => {
+        const dialog = document.querySelector("dialog");
+        dialog.showModal();
+
+        const result = document.querySelector("#message-result");
+        if (isPlayerWin) {
+            result.textContent = "Congratulations, You Wins";
+        } else {
+            result.textContent = "Too bad, You Lose";
+        }
+    };
+
     return {
         loadContent,
         attachComBoardEvents,
@@ -98,6 +110,7 @@ const PlayPhase = () => {
         updateShipStatus,
         setUpGameGuidance,
         attachExitEvent,
+        displayGameOverMessage,
     };
 };
 

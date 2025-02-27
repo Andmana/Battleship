@@ -482,6 +482,40 @@ body {
     transition: all 0.4s linear;
 }
 
+/***************/
+/*             */
+/*    DIALOG   */
+/*             */
+/***************/
+
+dialog {
+    position: absolute;
+    min-width: 250px;
+    background-color: #ccc;
+
+    border-radius: 5px;
+    border: 2px solid black;
+
+    padding: 1em;
+    margin: auto;
+
+    animation: fade-out 0.7s ease-out;
+}
+
+.message-result {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+dialog .button-actions {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+}
+
 @media (min-width: 1281px) {
     /* CSS */
 }
